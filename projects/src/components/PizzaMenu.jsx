@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 // Practice #1
@@ -166,6 +167,17 @@ import { useEffect, useState } from "react";
 
 function Footer() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const openHour = 12;
+  const closeHour = 22;
+  const isOpen =
+    currentTime.getHours() >= openHour && currentTime.getHours() <= closeHour;
+
+  // Convert 24-hour time to 12-hour format with AM/PM
+  function convertTo12Hour(hour24) {
+    const hour = hour24 % 12 || 12; // Convert 0 or 24 to 12
+    const period = hour24 >= 12 ? "PM" : "AM";
+    return `${hour}:00 ${period}`;
+  }
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -177,10 +189,23 @@ function Footer() {
 
   return (
     <>
-      <p className="w-full md:w-3/4 text-center text-lg font-mono mt-6">
-        {currentTime.toLocaleTimeString()}. We are currently open.
-      </p>
-      <button className="bg-yellow-500 rounded-lg mt-3 py-1 px-2 transition-transform duration-200 hover:scale-105">Order Now</button>
+      {isOpen ? (
+        <div className="text-gray-700 w-full md:w-3/4 text-center text-lg font-mono mt-6">
+          <p>
+            <span>{currentTime.toLocaleTimeString()}</span>. We are currently
+            open until {convertTo12Hour(closeHour)}. Come visit us or order
+            online.
+          </p>
+          <button className="px-2 py-1 mt-4 font-bold rounded-md bg-[#EBC43E]">
+            Order Now
+          </button>
+        </div>
+      ) : (
+        <p>
+          We&apos;re happy to welcome you between {openHour}:00 and {closeHour}
+          :00.
+        </p>
+      )}
     </>
   );
 }
