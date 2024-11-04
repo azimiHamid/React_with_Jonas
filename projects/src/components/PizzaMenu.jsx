@@ -4,7 +4,7 @@
 // Practice #1
 
 // Data
-const pizzas = [
+const pizzaData = [
   {
     name: "Margherita",
     ingredients: ["Tomato Sauce", "Mozzarella", "Basil"],
@@ -122,16 +122,31 @@ function Header() {
 }
 
 function Menu() {
+  // const pizzas = pizzaData;
+  const pizzas = [];
   return (
     <div className="w-full md:w-3/4">
       <h2 className="text-center uppercase border-t-black border-b-black border-t-2 border-b-2 text-2xl md:text-3xl my-6 py-2 md:py-3">
         our menu
       </h2>
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {pizzas.map((pizza, idx) => (
-          <Pizza key={idx} pizza={pizza} />
-        ))}
-      </div>
+
+      {pizzas.length > 0 ? (
+        <>
+          <p className="font-ibm-mono my-6 text-center lg:w-4/5 xl:w-3/5 lg:px-0 sm:px-5 px-2 mx-auto">
+            Authentic Italian cuisine. {pizzas.length} creative dishes to choose
+            from. All from our stone oven, all organic, all delicious.
+          </p>
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {pizzas.map((pizza, idx) => (
+              <Pizza key={idx} pizza={pizza} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p className="font-ibm-mono text-xl my-6 text-center lg:w-4/5 xl:w-3/5 lg:px-0 sm:px-5 px-2 mx-auto">
+          We&apos;re still working on our menu. Please come back later {":)"}
+        </p>
+      )}
     </div>
   );
 }
