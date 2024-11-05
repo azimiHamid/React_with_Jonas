@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 // Practice #1
 
 // Data
