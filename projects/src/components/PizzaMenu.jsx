@@ -122,8 +122,8 @@ function Header() {
 }
 
 function Menu() {
-  // const pizzas = pizzaData;
-  const pizzas = [];
+  const pizzas = pizzaData;
+  // const pizzas = [];
   return (
     <div className="w-full md:w-3/4">
       <h2 className="text-center uppercase border-t-black border-b-black border-t-2 border-b-2 text-2xl md:text-3xl my-6 py-2 md:py-3">
@@ -216,9 +216,10 @@ function Footer() {
           </button>
         </div>
       ) : (
-        <p>
-          We&apos;re happy to welcome you between {openHour}:00 and {closeHour}
-          :00.
+        <p className="text-gray-700 w-full md:w-3/4 text-center text-lg font-mono mt-6">
+          <span>{currentTime.toLocaleTimeString()}</span>. We&apos;re happy to
+          welcome you between {convertTo12Hour(openHour)} and{" "}
+          {convertTo12Hour(closeHour)}.
         </p>
       )}
     </>
