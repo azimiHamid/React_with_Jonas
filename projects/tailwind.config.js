@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         "ibm-mono": ['"IBM Plex Mono"', "sans-serif"],
         poppins: ['"Poppins"', "sans-serif"], // Added Poppins font
+        montserrat: ['"Montserrat"', "sans-serif"],
       },
     },
   },
