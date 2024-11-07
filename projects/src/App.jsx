@@ -1,3 +1,4 @@
+import DatePlay from "./components/DatePlay";
 import PizzaMenu from "./components/PizzaMenu";
 import ProfileCard from "./components/ProfileCard";
 import Steps from "./components/Steps";
@@ -8,6 +9,7 @@ function App() {
       <ProfileCard />
       <PizzaMenu />
       <Steps />
+      <DatePlay />
     </div>
   );
 }
