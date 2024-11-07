@@ -1,4 +1,4 @@
-import DatePlay from "./components/DatePlay";
+import DateCounter from "./components/DateCounter";
 import PizzaMenu from "./components/PizzaMenu";
 import ProfileCard from "./components/ProfileCard";
 import Steps from "./components/Steps";
@@ -9,7 +9,7 @@ function App() {
       <ProfileCard />
       <PizzaMenu />
       <Steps />
-      <DatePlay />
+      <DateCounter />
     </div>
   );
 }

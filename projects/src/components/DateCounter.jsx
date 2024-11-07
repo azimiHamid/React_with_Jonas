@@ -2,44 +2,17 @@
 
 import { useState } from "react";
 
-function DatePlay() {
-  const [currDate, setCurrDate] = useState(new Date());
+function DateCounter() {
+  const [step, setStep] = useState(1);
+  const [count, setCount] = useState(0);
 
-  const incrementDate = () => {
-    const newDate = new Date(currDate);
-    newDate.setDate(newDate.getDate() + step);
-    setCurrDate(newDate);
-  };
-
-  const decrementDate = () => {
-    const newDate = new Date(currDate);
-    newDate.setDate(newDate.getDate() - step);
-    setCurrDate(newDate);
-  };
+  let currDate = new Date();
+  currDate.setDate(currDate.getDate() + count);
 
   const reset = () => {
     setCount(0);
     setStep(1);
-    setCurrDate(new Date());
-  };
-
-  const [step, setStep] = useState(1);
-  const [count, setCount] = useState(0);
-
-  const decreaseStep = () => {
-    setStep((prev) => prev - 1);
-  };
-  const increaseStep = () => {
-    setStep((prev) => prev + 1);
-  };
-
-  const decreaseCount = () => {
-    setCount((prev) => prev - step);
-    decrementDate();
-  };
-  const increaseCount = () => {
-    setCount((prev) => prev + step);
-    incrementDate();
+    currDate = new Date();
   };
 
   return (
@@ -56,7 +29,7 @@ function DatePlay() {
         </button>
         <article className="flex items-center justify-between gap-6">
           <button
-            onClick={decreaseStep}
+            onClick={() => setStep((s) => s - 1)}
             className="flex items-center justify-center bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
           >
             &minus;
@@ -67,7 +40,7 @@ function DatePlay() {
           </p>
 
           <button
-            onClick={increaseStep}
+            onClick={() => setStep((s) => s + 1)}
             className="flex items-center justify-center bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
           >
             &#43;
@@ -75,7 +48,7 @@ function DatePlay() {
         </article>
         <article className="flex items-center justify-between gap-6">
           <button
-            onClick={decreaseCount}
+            onClick={() => setCount((c) => c - step)}
             className="flex items-center justify-center bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
           >
             &minus;
@@ -86,7 +59,7 @@ function DatePlay() {
           </p>
 
           <button
-            onClick={increaseCount}
+            onClick={() => setCount((c) => c + step)}
             className="flex items-center justify-center bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
           >
             &#43;
@@ -97,23 +70,21 @@ function DatePlay() {
           {count === 0 ? (
             <span>
               Today is <br className="sm:hidden inline" />{" "}
-              {currDate.toDateString()}.
             </span>
           ) : count > 0 ? (
             <span>
               {count} days from today is <br className="sm:hidden inline" />{" "}
-              {currDate.toDateString()}.
             </span>
           ) : (
             <span>
-              {Math.abs(count)} days ago was{" "}
-              <br className="sm:hidden inline" /> {currDate.toDateString()}.
+              {Math.abs(count)} days ago was <br className="sm:hidden inline" />
             </span>
           )}
+          <span>{currDate.toDateString()}.</span>
         </article>
       </div>
     </section>
   );
 }
 
-export default DatePlay;
+export default DateCounter;
