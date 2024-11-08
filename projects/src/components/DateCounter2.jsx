@@ -29,11 +29,12 @@ function DateCounter() {
         </button>
 
         <article className="flex items-center justify-between gap-6">
-          <input 
-          className="w-full my-3 lg:my-6"
-          type="range" 
-          min={0} 
-          max={10} />
+          <input
+            className="w-full my-3 lg:my-6"
+            type="range"
+            min={0}
+            max={10}
+          />
         </article>
         <article className="flex items-center justify-between gap-6">
           <button
