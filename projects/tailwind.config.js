@@ -8,6 +8,9 @@ export default {
         poppins: ['"Poppins"', "sans-serif"], // Added Poppins font
         montserrat: ['"Montserrat"', "sans-serif"],
       },
+      "available-w": {
+        "fill-available": "-webkit-fill-available",
+      },
     },
   },
   plugins: [],
