@@ -49,8 +49,8 @@ const Card = ({ qObj }) => {
     <article
       onClick={() => setDisplayAnswer(!displayAnswer)}
       className={`${
-        displayAnswer ? "bg-green-800" : ""
-      } w-full h-[250px] flex items-center justify-center text-2xl p-3 text-center text-white cursor-pointer bg-yellow-900 rounded-xl active:scale-100 hover:scale-95 transition-transform duration-500`}
+        displayAnswer ? "bg-green-600" : ""
+      } w-full h-[250px] flex items-center justify-center text-2xl p-3 text-center text-white cursor-pointer bg-yellow-900 rounded-xl hover:scale-95 transition-transform duration-500`}
     >
       {displayAnswer ? (
         <p className="">Answer: {qObj.answer}</p>
