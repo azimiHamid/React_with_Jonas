@@ -1,5 +1,6 @@
 import DateCounter from "./components/DateCounter";
 import FlashCards from "./components/FlashCards";
+import FlashCards2 from "./components/FlashCards2";
 import PizzaMenu from "./components/PizzaMenu";
 import ProfileCard from "./components/ProfileCard";
 import TravelApp from "./components/project1/TravelApp";
@@ -14,6 +15,7 @@ function App() {
       <DateCounter />
       <TravelApp />
       <FlashCards />
+      <FlashCards2 />
     </div>
   );
 }
