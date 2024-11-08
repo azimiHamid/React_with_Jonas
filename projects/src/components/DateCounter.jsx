@@ -18,7 +18,7 @@ function DateCounter() {
   return (
     <section className="w-full min-h-screen flex flex-col items-center justify-center bg-[#ddd2b6] p-4 font-poppins">
       <h2 className="sm:text-4xl text-2xl text-center mb-10">
-        Challenge #2: Date Converting
+        Challenge #2: Date Counter
       </h2>
       <div className="flex flex-col items-stretch justify-center gap-3 font-md text-xl bg-gray-200 p-8 rounded-lg w-full sm:w-[550px] hover:scale-105 transition-transform duration-400 ">
         <button
