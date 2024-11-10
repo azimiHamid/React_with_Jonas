@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 function DateCounter() {
-  const [step, setStep] = useState(1);
+  const [range, setRange] = useState(1);
   const [count, setCount] = useState(0);
 
   let currDate = new Date();
@@ -11,8 +11,7 @@ function DateCounter() {
 
   const reset = () => {
     setCount(0);
-    setStep(1);
-    currDate = new Date();
+    setRange(1);
   };
 
   return (
@@ -30,27 +29,33 @@ function DateCounter() {
 
         <article className="flex items-center justify-between gap-6">
           <input
-            className="w-full my-3 lg:my-6"
+            className="w-full my-3 lg:my-6 cursor-pointer"
             type="range"
-            min={0}
-            max={10}
+            min={1}
+            max={365}
+            value={range}
+            onChange={(e) => setRange(Number(e.target.value))}
           />
+          <span>{range}</span>
         </article>
-        <article className="flex items-center justify-between gap-6">
+        <article className="flex items-center justify-between sm:gap-6 gap-1">
           <button
-            onClick={() => setCount((c) => c - step)}
-            className="flex items-center justify-center bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
+            onClick={() => setCount((c) => c - range)}
+            className="bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
           >
             &minus;
           </button>
 
-          <p>
-            Count: <span>{count}</span>
-          </p>
+          <input
+            className="min-w-40 sm:w-2/3 text-center bg-transparent outline-none rounded-lg border border-teal-900 p-1"
+            type="text"
+            value={count}
+            onChange={(e) => setCount(Number(e.target.value))}
+          />
 
           <button
-            onClick={() => setCount((c) => c + step)}
-            className="flex items-center justify-center bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
+            onClick={() => setCount((c) => c + range)}
+            className="bg-teal-800 text-gray-100 w-9 h-9 rounded-full leading-none active:scale-95"
           >
             &#43;
           </button>
@@ -62,12 +67,26 @@ function DateCounter() {
               Today is <br className="sm:hidden inline" />{" "}
             </span>
           ) : count > 0 ? (
+            count < 365 ? (
+              <span>
+                {count} days from today is <br className="sm:hidden inline" />
+              </span>
+            ) : (
+              <span>
+                {Math.floor(count / 365)} years
+                {count % 365 !== 0 ? ` and ${count % 365} days ` : " "}
+                from today is <br className="sm:hidden inline" />
+              </span>
+            )
+          ) : Math.abs(count) < 365 ? (
             <span>
-              {count} days from today is <br className="sm:hidden inline" />{" "}
+              {Math.abs(count)} days ago was <br className="sm:hidden inline" />
             </span>
           ) : (
             <span>
-              {Math.abs(count)} days ago was <br className="sm:hidden inline" />
+              {Math.floor(Math.abs(count / 365))} years
+              {count % 365 !== 0 ? ` and ${Math.abs(count % 365)} days ` : " "}
+              ago was <br className="sm:hidden inline" />
             </span>
           )}
           <span>{currDate.toDateString()}.</span>
