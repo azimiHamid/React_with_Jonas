@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import Form from "./Form";
 import PackingList from "./PackingList";
 import Stats from "./Stats";
 
 function TravelApp() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    const storedItems = localStorage.getItem("items");
+    return storedItems ? JSON.parse(storedItems) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
   const handleAddItems = (item) => {
     setItems((items) => [...items, item]);
