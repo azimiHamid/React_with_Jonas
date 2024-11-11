@@ -25,8 +25,8 @@ function TravelApp() {
 
   const handleClearItems = () => {
     if (items.length === 0) return;
-    const conf = confirm("Clear all the items?");
-    if (conf === true) setItems([]);
+    const confirmed = confirm("Clear all the items?");
+    if (confirmed === true) setItems([]);
   };
 
   return (
