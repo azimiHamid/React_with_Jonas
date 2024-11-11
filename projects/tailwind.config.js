@@ -5,11 +5,11 @@ export default {
     extend: {
       fontFamily: {
         "ibm-mono": ['"IBM Plex Mono"', "sans-serif"],
-        poppins: ['"Poppins"', "sans-serif"], // Added Poppins font
+        poppins: ['"Poppins"', "sans-serif"],
         montserrat: ['"Montserrat"', "sans-serif"],
       },
-      "available-w": {
-        "fill-available": "-webkit-fill-available",
+      boxShadow: {
+        soft: "0 0 15px 2px rgba(0, 0, 0, 0.2)",
       },
     },
   },
