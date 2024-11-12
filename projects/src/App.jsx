@@ -7,6 +7,7 @@ import PizzaMenu from "./components/PizzaMenu";
 import ProfileCard from "./components/ProfileCard";
 import TravelApp from "./components/project1/TravelApp";
 import Steps from "./components/Steps";
+import Steps2 from "./components/Steps2";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <FlashCards2 />
       <DateCounter2 />
       <Accordion />
+      <Steps2 />
     </div>
   );
 }
