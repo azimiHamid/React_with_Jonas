@@ -35,7 +35,7 @@ function Steps2() {
 
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`text-4xl transition-transform duration-300 ease-in-out absolute top-36 sm:top-52 right-4 xl:right-64 lg:right-44 md:right-24 sm:right-10 ${
+        className={`text-4xl transition-transform duration-300 ease-in-out absolute top-10 sm:top-52 right-4 xl:right-64 lg:right-44 md:right-24 sm:right-10 ${
           isOpen ? "rotate-90" : "rotate-0"
         }`}
       >
@@ -62,41 +62,51 @@ function Steps2() {
           ))}
         </article>
 
-        <p className="my-12 font-poppins text-center font-medium text-2xl">
-          {step === 0
-            ? "Hello React Dev"
-            : `Step ${step}: ${messages[step - 1]}`}
-        </p>
+        <Msg step={step}>
+          {messages[step - 1]}
+          <p>
+            <Button
+              bgColor="transparent"
+              textColor="#7950f2"
+              onClick={() => alert("Something that you have to learn is React.js")}
+            >
+              Show more
+            </Button>
+          </p>
+        </Msg>
 
         <article className="my-5 flex items-center justify-between mx-5">
-          <Button
-            bgColor="#7950f2"
-            textColor="#fff"
-            onClick={handlePrev}
-            step={step}
-          >
+          <Button bgColor="#7950f2" textColor="#fff" onClick={handlePrev}>
             👈Prev
           </Button>
-          <Button
-            bgColor="#7950f2"
-            textColor="#fff"
-            onClick={handleNext}
-            step={step}
-          >
+          <Button bgColor="#7950f2" textColor="#fff" onClick={handleNext}>
             Next👉
           </Button>
         </article>
       </div>
+
+      {/* Reusing the Msg component by passing the children prop */}
+      {step > 0 && <Msg step={1}>Hamid is Back 😎</Msg>}
+      {step > 1 && <Msg step={2}>Uisng Children prop 😃</Msg>}
     </section>
   );
 }
+
+const Msg = ({ step, children }) => {
+  return (
+    <article className="my-12 font-poppins text-center font-medium text-2xl">
+      {step === 0 ? "Hello React Dev" : `Step ${step}: `}
+      {step !== 0 && children}
+    </article>
+  );
+};
 
 const Button = ({ textColor, bgColor, onClick, children }) => {
   return (
     <button
       onClick={onClick}
       style={{ background: bgColor, color: textColor }}
-      className={`rounded-full px-4 py-1 sm:px-5 sm:py-2 font-poppins sm:text-lg active:scale-95`}
+      className="rounded-full px-4 py-1 sm:px-5 sm:py-2 font-poppins sm:text-lg active:scale-95"
     >
       {children}
     </button>
