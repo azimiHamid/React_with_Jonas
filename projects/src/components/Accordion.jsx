@@ -52,7 +52,7 @@ const AccordionItem = ({ id, title, text }) => {
     >
       <div className="flex items-center justify-between">
         <span className={`opacity-60 ${isOpen ? "text-teal-600" : ""}`}>
-          {id <= 9 ? `0${id + 1}` : id + 1}
+          {id < 9 ? `0${id + 1}` : id + 1}
         </span>
         <h3 className={`flex-1 mx-5 ${isOpen ? "text-teal-600" : ""}`}>
           {title}
