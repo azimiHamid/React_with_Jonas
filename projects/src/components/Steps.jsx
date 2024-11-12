@@ -9,25 +9,17 @@ const messages = [
 function Steps() {
   const [step, setStep] = useState(0);
   const [isOpen, setIsOpen] = useState(true);
-  const [isAtStart, setIsAtStart] = useState(true); // Start at the beginning
-  const [isAtEnd, setIsAtEnd] = useState(false);
 
   const handlePrev = () => {
     if (step > 0) {
       setStep((prev) => prev - 1);
     }
-
-    setIsAtStart(step <= 1);
-    setIsAtEnd(false);
   };
 
   const handleNext = () => {
     if (step < 3) {
       setStep((prev) => prev + 1);
     }
-
-    setIsAtStart(false);
-    setIsAtEnd(step >= 2);
   };
 
   return (
@@ -75,7 +67,7 @@ function Steps() {
           <button
             onClick={handlePrev}
             className={`${
-              isAtStart && "opacity-50"
+              step < 1 && "opacity-50"
             } bg-[#7950f2] rounded-full px-4 py-1 sm:px-5 sm:py-2 font-poppins sm:text-lg text-gray-100 active:scale-95`}
           >
             Prev
@@ -83,7 +75,7 @@ function Steps() {
           <button
             onClick={handleNext}
             className={`${
-              isAtEnd && "opacity-50"
+              step > 2 && "opacity-50"
             } bg-[#7950f2] rounded-full px-4 py-1 sm:px-5 sm:py-2 font-poppins sm:text-lg text-gray-100 active:scale-95`}
           >
             Next
