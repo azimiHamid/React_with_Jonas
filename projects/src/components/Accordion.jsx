@@ -57,7 +57,7 @@ const AccordionItem = ({ id, title, text }) => {
         <h3 className={`flex-1 mx-5 ${isOpen ? "text-teal-600" : ""}`}>
           {title}
         </h3>
-        <span>{isOpen ? "-" : "+"}</span>
+        <span>{!isOpen ? "+" : "-"}</span>
       </div>
       {/* {isOpen && <p className="font-normal py-5 sm:px-11 text-sm">{text}</p>} */}
       <div
