@@ -9,6 +9,7 @@ import ProfileCard from "./components/ProfileCard";
 import TravelApp from "./components/project1/TravelApp";
 import Steps from "./components/Steps";
 import Steps2 from "./components/Steps2";
+import TipCalculator from "./components/tip_calculator/TipCalculator";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Accordion />
       <Steps2 />
       <Accordion2 />
+      <TipCalculator />
     </div>
   );
 }
