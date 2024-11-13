@@ -9,8 +9,7 @@ function TipCalculator() {
   const [tip2, setTip2] = useState(0);
 
   const avgTip = Math.round((tip1 + tip2) / 2);
-  const totalTip = Math.round((avgTip / 100) * bill);
-  const totalBill = bill + totalTip;
+  const tip = Math.round((avgTip / 100) * bill);
 
   const handleReset = () => {
     setBill(0);
@@ -33,7 +32,7 @@ function TipCalculator() {
       <div className="p-5 rounded-lg bg-teal-400 flex flex-col justify-center gap-5 font-medium sm:text-xl w-full md:w-[700px] ">
         <article className="bg-[#347a94] py-2 px-3 grid grid-cols-1 md:grid-cols-2">
           <Label htmlFor="billInput">How much was the bill?</Label>
-          <Input setBill={setBill} value={bill} type="text" id="billInput" />
+          <Input onSetBill={setBill} bill={bill} type="text" id="billInput" />
         </article>
 
         <article className="bg-[#347a94] py-2 px-3 grid grid-cols-1 md:grid-cols-2">
@@ -48,7 +47,7 @@ function TipCalculator() {
 
         {bill !== 0 && (
           <p className="bg-[#101A28] py-2 px-3 text-[#c5c5c5]">
-            You pay ${totalBill} (${bill} + ${totalTip} tip)
+            You pay ${bill + tip} (${bill} + ${tip} tip)
           </p>
         )}
 
