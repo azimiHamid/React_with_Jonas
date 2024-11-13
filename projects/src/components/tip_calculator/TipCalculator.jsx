@@ -8,7 +8,7 @@ function TipCalculator() {
   const [tip1, setTip1] = useState(0);
   const [tip2, setTip2] = useState(0);
 
-  const avgTip = Math.round((tip1 + tip2) / 2);
+  const avgTip = (tip1 + tip2) / 2;
   const tip = Math.round((avgTip / 100) * bill);
 
   const handleReset = () => {
