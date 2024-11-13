@@ -1,4 +1,5 @@
 import Accordion from "./components/Accordion";
+import Accordion2 from "./components/Accordion2";
 import DateCounter from "./components/DateCounter";
 import DateCounter2 from "./components/DateCounter2";
 import FlashCards from "./components/FlashCards";
@@ -22,6 +23,7 @@ function App() {
       <DateCounter2 />
       <Accordion />
       <Steps2 />
+      <Accordion2 />
     </div>
   );
 }
