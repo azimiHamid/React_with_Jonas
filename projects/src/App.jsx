@@ -2,6 +2,7 @@ import Accordion from "./components/Accordion";
 import Accordion2 from "./components/Accordion2";
 import DateCounter from "./components/DateCounter";
 import DateCounter2 from "./components/DateCounter2";
+import BillSplitter from "./components/eat_n_split/BillSplitter";
 import FlashCards from "./components/FlashCards";
 import FlashCards2 from "./components/FlashCards2";
 import PizzaMenu from "./components/PizzaMenu";
@@ -26,6 +27,7 @@ function App() {
       <Steps2 />
       <Accordion2 />
       <TipCalculator />
+      <BillSplitter />
     </div>
   );
 }
