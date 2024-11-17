@@ -9,7 +9,6 @@ const Form = ({ onAddItems }) => {
     e.preventDefault();
     if (!description) return;
     const newItem = { id: Date.now(), description, qauntity, packed: false };
-    console.log(newItem);
 
     onAddItems(newItem);
 
