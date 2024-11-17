@@ -1,18 +1,24 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+// import SplitBillModal from "./SplitBillModal";
+// import AddFriendForm from "./AddFriendForm";
+// import FriendList from "./FriendList";
 
 const initialFriends = [
   {
     name: "Clark",
     url: "https://images.pexels.com/photos/1427889/pexels-photo-1427889.jpeg?auto=compress&cs=tinysrgb&w=600",
+    owe: null,
   },
   {
     name: "Antony",
     url: "https://images.pexels.com/photos/792326/pexels-photo-792326.jpeg?auto=compress&cs=tinysrgb&w=600",
+    owe: null,
   },
   {
     name: "Charles",
     url: "https://images.pexels.com/photos/769772/pexels-photo-769772.jpeg?auto=compress&cs=tinysrgb&w=600",
+    owe: null,
   },
 ];
 
@@ -36,17 +42,22 @@ function BillSplitter() {
   const [toggleAddFriend, setToggleAddFriend] = useState(false);
   const [selectedFriendId, setSelectedFriendId] = useState(null);
   const [newFriend, setNewFriend] = useState({ name: "", url: "" });
-  const [friends, setFriends] = useState(initialFriends);
+
+  const [friends, setFriends] = useState(() => {
+    const savedFriends = localStorage.getItem("friends");
+    return savedFriends ? JSON.parse(savedFriends) : initialFriends;
+  });
 
   const [bill, setBill] = useState("");
   const [myExpenses, setMyExpenses] = useState(0);
-  let friendsExpenses = bill - myExpenses;
-  let owe;
+  const [whoPay, setWhoPay] = useState(0);
 
-  const [whoPay, setWhoPay] = useState(1);
+  useEffect(() => {
+    localStorage.setItem("friends", JSON.stringify(friends));
+  }, [friends]);
 
   const handleAddFriend = () => {
-    setFriends([...friends, newFriend]);
+    setFriends([...friends, { ...newFriend, owe: null }]);
     setNewFriend({ name: "", url: "" });
     setToggleAddFriend(!toggleAddFriend);
   };
@@ -57,11 +68,25 @@ function BillSplitter() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (whoPay === 1) {
-      owe = friendsExpenses;
-    } else {
-      owe = myExpenses;
-    }
+
+    const updatedFriends = friends.map((friend, idx) => {
+      if (idx === selectedFriendId) {
+        const friendsExpenses = bill - myExpenses;
+        const owe = whoPay === 1 ? friendsExpenses : myExpenses;
+
+        return {
+          ...friend,
+          owe:
+            whoPay === 1
+              ? `${friend.name} owes you $${owe}`
+              : `You owe ${friend.name} $${owe}`,
+        };
+      }
+      return friend;
+    });
+
+    setFriends(updatedFriends);
+    setSelectedFriendId(null); // Close the modal
   };
 
   return (
@@ -86,12 +111,16 @@ function BillSplitter() {
                 />
                 <div className="flex-1">
                   <h4 className="text-lg font-semibold">{friend.name}</h4>
-                  <p className="text-gray-600">
-                    {selectedFriendId === null
-                      ? `You and ${friend.name} are even.`
-                      : whoPay === 1
-                      ? `${friend.name} owes you ${owe}$`
-                      : `You owe ${friend.name} ${owe}$`}
+                  <p
+                    className={`${
+                      friend.owe === null
+                        ? "text-gray-500"
+                        : friend.owe?.includes("owes you")
+                        ? "text-teal-500"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {friend.owe ?? `You and ${friend.name} are even.`}
                   </p>
                 </div>
                 <button
@@ -174,20 +203,8 @@ function BillSplitter() {
               <input
                 className="text-center border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 type="number"
-                onChange={(e) => setMyExpenses(e.target.value)}
+                onChange={(e) => setMyExpenses(Number(e.target.value))}
                 value={myExpenses}
-              />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-              <label htmlFor="input3" className="text-gray-700">
-                💁 {friends[selectedFriendId].name}&apos;s Expense:
-              </label>
-              <input
-                className="text-center border border-gray-300 p-2 rounded-lg text-gray-500 bg-gray-100"
-                type="text"
-                id="input3"
-                disabled
-                value={friendsExpenses}
               />
             </div>
 
@@ -208,7 +225,7 @@ function BillSplitter() {
 
             <div className="text-right">
               <button
-                onClick={handleCloseModal}
+                type="submit"
                 className="bg-orange-500 w-full md:w-1/2 text-white py-2 px-6 rounded-lg hover:bg-orange-600"
               >
                 Split Bill
@@ -220,5 +237,4 @@ function BillSplitter() {
     </section>
   );
 }
-
 export default BillSplitter;
