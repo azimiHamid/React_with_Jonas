@@ -11,6 +11,7 @@ import TravelApp from "./components/project1/TravelApp";
 import Steps from "./components/Steps";
 import Steps2 from "./components/Steps2";
 import TipCalculator from "./components/tip_calculator/TipCalculator";
+import UsePopcorn from "./components/use_popcorn/UsePopcorn";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Accordion2 />
       <TipCalculator />
       <BillSplitter />
+      <UsePopcorn />
     </div>
   );
 }

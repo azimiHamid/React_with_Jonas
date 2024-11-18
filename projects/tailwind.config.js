@@ -11,6 +11,9 @@ export default {
       boxShadow: {
         soft: "0 0 15px 2px rgba(0, 0, 0, 0.2)",
       },
+      colors: {
+        "custom-purple": "#6741D9",
+      },
     },
   },
   plugins: [],
