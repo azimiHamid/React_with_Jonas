@@ -10,9 +10,10 @@ import ProfileCard from "./components/ProfileCard";
 import TravelApp from "./components/project1/TravelApp";
 import Steps from "./components/Steps";
 import Steps2 from "./components/Steps2";
+import TextExpander from "./components/TextExpander";
 import TipCalculator from "./components/tip_calculator/TipCalculator";
-import StarRating from "./components/use_popcorn/StarRating";
-// import UsePopcorn from "./components/use_popcorn/UsePopcorn";
+// import StarRating from "./components/use_popcorn/StarRating";
+import UsePopcorn from "./components/use_popcorn/UsePopcorn";
 
 function App() {
   return (
@@ -30,15 +31,17 @@ function App() {
       <Accordion2 />
       <TipCalculator />
       <BillSplitter />
-      {/* <UsePopcorn /> */}
-      <StarRating maxRating={10} />
+      <UsePopcorn />
+      {/* <StarRating maxRating={10} />
       <StarRating
         maxRating={5}
         color="red"
         size={64}
         messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
         defaultRating={3}
-      />
+      /> */}
+
+      <TextExpander />
     </div>
   );
 }
