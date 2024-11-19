@@ -62,22 +62,48 @@ const average = (arr) =>
     : 0;
 
 function UsePopcorn() {
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
+
   return (
     <section className="w-full min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] justify-items-center p-4 bg-gray-900 text-white">
-      <Navbar />
-      <Main />
+      {/* components composition can stop props drilling */}
+      <Navbar>
+        <Logo />
+        <div className="flex justify-around items-center gap-5">
+          <Search />
+          <NumResults movies={movies} />
+        </div>
+      </Navbar>
+
+      <Main>
+        {/* <Box>
+          <MovieList movies={movies} />
+        </Box>
+
+        <Box>
+          <WatchedSummary watched={watched} />
+          <WatchedList watched={watched} />
+        </Box> */}
+        {/* This part can also be handled as followings, like we see in react-router */}
+        <Box element={<MovieList movies={movies} />} />
+        <Box
+          element={
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedList watched={watched} />
+            </>
+          }
+        />
+      </Main>
     </section>
   );
 }
 
-const Navbar = () => {
+const Navbar = ({ children }) => {
   return (
     <nav className="w-full max-w-4xl flex flex-col sm:flex-row items-center justify-between bg-custom-purple p-4 rounded-lg shadow-lg mb-6">
-      <Logo />
-      <div className="flex justify-between items-center gap-5">
-        <Search />
-        <NumResults />
-      </div>
+      {children}
     </nav>
   );
 };
@@ -107,16 +133,11 @@ const Search = () => {
   );
 };
 
-const NumResults = () => {
-  return (
-    <>
-      {/* <p className="mt-3 text-sm">Found {movies.length} results</p> */}
-      <p className="mt-3 text-sm">Found {"X"} results</p>
-    </>
-  );
+const NumResults = ({ movies }) => {
+  return <p className="mt-3 text-sm">Found {movies.length} results</p>;
 };
 
-const Main = () => {
+const Main = ({ children }) => {
   // const handleMovieClick = (title) => {
   // Check if the movie is already in the watched list
   //   const isAlreadyWatched = watched.some((movie) => movie.title === title);
@@ -131,31 +152,54 @@ const Main = () => {
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-      <Left />
-      <Right />
+      {children}
     </main>
   );
 };
 
-const Left = () => {
-  const [isOpen1, setIsOpen1] = useState(true);
+const Box = ({ element }) => {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <aside className="relative h-auto max-h-[80vh] overflow-y-auto scrollbar-hide bg-gray-800 p-4 rounded-lg shadow-lg">
       <button
         className="absolute top-2 right-2 h-8 w-8 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded-full"
-        onClick={() => setIsOpen1((prev) => !prev)}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
-        {isOpen1 ? "-" : "+"}
+        {isOpen ? "-" : "+"}
       </button>
-      {isOpen1 && <MovieList />}
+      {isOpen && element}
     </aside>
   );
 };
 
-const MovieList = () => {
-  const [movies, setMovies] = useState(tempMovieData);
+// const WatchedBox = () => {
+//   const [watched, setWatched] = useState(tempWatchedData);
+//   const [isOpen2, setIsOpen2] = useState(true);
 
+//   return (
+//     <aside className="relative h-auto max-h-[80vh] overflow-y-auto scrollbar-hide bg-gray-800 p-4 rounded-lg shadow-lg">
+//       <button
+//         className="absolute top-2 right-2 h-8 w-8 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded-full"
+//         onClick={() => setIsOpen2((prev) => !prev)}
+//       >
+//         {isOpen2 ? "-" : "+"}
+//       </button>
+//       {isOpen2 && (
+//         <div className="space-y-4 mt-4">
+//           <h2 className="text-lg font-bold mb-4 text-white">
+//             Movies You Watched
+//           </h2>
+
+//           <WatchedSummary watched={watched} />
+//           <WatchedList watched={watched} />
+//         </div>
+//       )}
+//     </aside>
+//   );
+// };
+
+const MovieList = ({ movies }) => {
   return (
     <ul className="grid gap-3 mt-4">
       {movies?.map((movie, idx) => (
@@ -181,43 +225,20 @@ const Movie = ({ movie }) => {
   );
 };
 
-const Right = () => {
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
-
-  return (
-    <aside className="relative h-auto max-h-[80vh] overflow-y-auto scrollbar-hide bg-gray-800 p-4 rounded-lg shadow-lg">
-      <button
-        className="absolute top-2 right-2 h-8 w-8 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded-full"
-        onClick={() => setIsOpen2((prev) => !prev)}
-      >
-        {isOpen2 ? "-" : "+"}
-      </button>
-      {isOpen2 && (
-        <div className="space-y-4 mt-4">
-          <h2 className="text-lg font-bold mb-4 text-white">
-            Movies You Watched
-          </h2>
-
-          <WatchedSummary watched={watched} />
-          <WatchedList watched={watched} />
-        </div>
-      )}
-    </aside>
-  );
-};
-
 const WatchedSummary = ({ watched }) => {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
   return (
-    <div className="flex items-center justify-between text-xs sm:text-sm text-gray-400">
-      <span>😲 Total: {watched.length}</span>
-      <span>⭐ IMDb: {avgImdbRating}</span>
-      <span>✨ User: {avgUserRating}</span>
-      <span>⏳ Runtime: {avgRuntime} min</span>
+    <div className="space-y-4 mt-4">
+      <h2 className="text-lg font-bold mb-4 text-white">Movies You Watched</h2>
+      <div className="flex items-center justify-between text-xs sm:text-sm text-gray-400">
+        <span>📈 Total: {watched.length}</span>
+        <span>⭐ IMDb: {avgImdbRating}</span>
+        <span>✨ User: {avgUserRating}</span>
+        <span>⏳ Runtime: {avgRuntime} min</span>
+      </div>
     </div>
   );
 };
@@ -226,30 +247,33 @@ const WatchedList = ({ watched }) => {
   return (
     <ul>
       {watched.map((movie, idx) => (
-        <li
-          key={idx}
-          className="flex items-center justify-between my-3 p-2 bg-gray-700 rounded-lg border border-gray-600"
-        >
-          <div className="flex items-center space-x-4">
-            <img
-              className="w-12 h-16 object-cover rounded-lg"
-              src={movie.poster}
-              alt={movie.title}
-            />
-            <div>
-              <h3 className="font-bold text-white">{movie.title}</h3>
-              <p className="my-1 text-xs text-gray-400">
-                ⭐ {movie.imdbRating} | ✨ {movie.userRating} | ⏳{" "}
-                {movie.runtime} min
-              </p>
-            </div>
-          </div>
-          <button className="bg-red-600 hover:bg-red-500 text-white p-2 flex items-center justify-center rounded-full w-[30px] h-[30px]">
-            x
-          </button>
-        </li>
+        <WatchedMovie movie={movie} key={idx} />
       ))}
     </ul>
+  );
+};
+
+const WatchedMovie = ({ movie }) => {
+  return (
+    <li className="flex items-center justify-between my-3 p-2 bg-gray-700 rounded-lg border border-gray-600">
+      <div className="flex items-center space-x-4">
+        <img
+          className="w-12 h-16 object-cover rounded-lg"
+          src={movie.poster}
+          alt={movie.title}
+        />
+        <div>
+          <h3 className="font-bold text-white">{movie.title}</h3>
+          <p className="my-1 text-xs text-gray-400">
+            ⭐ {movie.imdbRating} | ✨ {movie.userRating} | ⏳ {movie.runtime}{" "}
+            min
+          </p>
+        </div>
+      </div>
+      <button className="bg-red-600 hover:bg-red-500 text-white p-2 flex items-center justify-center rounded-full w-[30px] h-[30px]">
+        x
+      </button>
+    </li>
   );
 };
 
