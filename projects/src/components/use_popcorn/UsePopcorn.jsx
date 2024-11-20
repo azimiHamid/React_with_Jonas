@@ -138,17 +138,6 @@ const NumResults = ({ movies }) => {
 };
 
 const Main = ({ children }) => {
-  // const handleMovieClick = (title) => {
-  // Check if the movie is already in the watched list
-  //   const isAlreadyWatched = watched.some((movie) => movie.title === title);
-  //   if (isAlreadyWatched) {
-  //     alert("This movie is already in the watched list!");
-  //     return;
-  //   }
-
-  //   const newWatchedMovie = movies.find((m) => m.title === title);
-  //   setWatched([...watched, newWatchedMovie]);
-  // };
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
@@ -172,32 +161,6 @@ const Box = ({ element }) => {
     </aside>
   );
 };
-
-// const WatchedBox = () => {
-//   const [watched, setWatched] = useState(tempWatchedData);
-//   const [isOpen2, setIsOpen2] = useState(true);
-
-//   return (
-//     <aside className="relative h-auto max-h-[80vh] overflow-y-auto scrollbar-hide bg-gray-800 p-4 rounded-lg shadow-lg">
-//       <button
-//         className="absolute top-2 right-2 h-8 w-8 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded-full"
-//         onClick={() => setIsOpen2((prev) => !prev)}
-//       >
-//         {isOpen2 ? "-" : "+"}
-//       </button>
-//       {isOpen2 && (
-//         <div className="space-y-4 mt-4">
-//           <h2 className="text-lg font-bold mb-4 text-white">
-//             Movies You Watched
-//           </h2>
-
-//           <WatchedSummary watched={watched} />
-//           <WatchedList watched={watched} />
-//         </div>
-//       )}
-//     </aside>
-//   );
-// };
 
 const MovieList = ({ movies }) => {
   return (
