@@ -26,39 +26,37 @@ function StarRating({
   };
 
   return (
-    <section className="bg-slate-700 text-white min-h-screen w-full flex items-center justify-center p-4">
-      <article className="grid gap-4 md:grid-cols-2 md:gap-6 items-center">
-        <div
-          className="flex flex-wrap justify-center"
-          role="radiogroup"
-          aria-label="Star Rating"
-        >
-          {Array.from({ length: maxRating }, (_, i) => (
-            <Star
-              key={i}
-              onClick={() => handleRating(i + 1)}
-              full={tempRating ? tempRating > i : rating > i}
-              onMouseEnter={() => setTempRating(i + 1)}
-              onMouseLeave={() => setTempRating(0)}
-              color={color}
-              size={size}
-            />
-          ))}
-        </div>
+    <article className="grid gap-4 md:grid-cols-2 md:gap-6 items-center">
+      <div
+        className="flex flex-wrap justify-center"
+        role="radiogroup"
+        aria-label="Star Rating"
+      >
+        {Array.from({ length: maxRating }, (_, i) => (
+          <Star
+            key={i}
+            onClick={() => handleRating(i + 1)}
+            full={tempRating ? tempRating > i : rating > i}
+            onMouseEnter={() => setTempRating(i + 1)}
+            onMouseLeave={() => setTempRating(0)}
+            color={color}
+            size={size}
+          />
+        ))}
+      </div>
 
-        <p
-          className="text-center md:text-left font-bold"
-          style={{
-            fontSize: `${size / 1.5}px`,
-            color: color,
-          }}
-        >
-          {messages.length === maxRating
-            ? messages[tempRating ? tempRating - 1 : rating - 1]
-            : tempRating || rating || ""}
-        </p>
-      </article>
-    </section>
+      <p
+        className="text-center md:text-left font-bold"
+        style={{
+          fontSize: `${size / 1.5}px`,
+          color: color,
+        }}
+      >
+        {messages.length === maxRating
+          ? messages[tempRating ? tempRating - 1 : rating - 1]
+          : tempRating || rating || ""}
+      </p>
+    </article>
   );
 }
 

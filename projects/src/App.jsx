@@ -13,7 +13,6 @@ import Steps2 from "./components/Steps2";
 import TextExpander from "./components/TextExpander";
 import TipCalculator from "./components/tip_calculator/TipCalculator";
 // import StarRating from "./components/use_popcorn/StarRating";
-import UsePopcorn from "./components/use_popcorn/UsePopcorn";
 
 function App() {
   return (
@@ -31,16 +30,15 @@ function App() {
       <Accordion2 />
       <TipCalculator />
       <BillSplitter />
-      <UsePopcorn />
-      {/* <StarRating maxRating={10} />
-      <StarRating
+
+      {/* <StarRating maxRating={10} /> */}
+      {/* <StarRating
         maxRating={5}
         color="red"
         size={64}
         messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
         defaultRating={3}
       /> */}
-
       <TextExpander />
       <p></p>
     </div>

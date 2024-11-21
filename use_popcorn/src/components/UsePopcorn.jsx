@@ -1,37 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-
-const tempMovieData = [
-  {
-    imdbID: "tt1375666",
-    title: "Inception",
-    year: 2010,
-    poster:
-      "https://image.tmdb.org/t/p/original/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg",
-  },
-  {
-    imdbID: "tt0816692",
-    title: "Interstellar",
-    year: 2014,
-    poster:
-      "https://image.tmdb.org/t/p/original/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
-  },
-  {
-    imdbID: "tt4154796",
-    title: "Avengers: Endgame",
-    year: 2019,
-    poster:
-      "https://image.tmdb.org/t/p/original/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
-  },
-  {
-    imdbID: "tt0068646",
-    title: "The Godfather",
-    year: 1972,
-    poster:
-      "https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
-  },
-];
+import { useEffect, useState } from "react";
 
 const tempWatchedData = [
   {
@@ -61,9 +30,41 @@ const average = (arr) =>
     ? Math.round(arr.reduce((acc, curr) => acc + curr, 0) / arr.length)
     : 0;
 
+const KEY = "10f92d62";
+
 function UsePopcorn() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const query = "interstellar";
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setMovies(data.Search);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //       setIsLoading(false); // Set loading to false even if there’s an error
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchMovies = async () => {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+      setIsLoading(false);
+    };
+    fetchMovies();
+  }, []);
 
   return (
     <section className="w-full min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] justify-items-center p-4 bg-gray-900 text-white">
@@ -85,8 +86,9 @@ function UsePopcorn() {
           <WatchedSummary watched={watched} />
           <WatchedList watched={watched} />
         </Box> */}
+
         {/* This part can also be handled as followings, like we see in react-router */}
-        <Box element={<MovieList movies={movies} />} />
+        <Box element={isLoading ? <Loader /> : <MovieList movies={movies} />} />
         <Box
           element={
             <>
@@ -99,6 +101,12 @@ function UsePopcorn() {
     </section>
   );
 }
+
+const Loader = () => (
+  <p className="h-full w-full flex items-center justify-center text-4xl font-poppins">
+    LOADING...
+  </p>
+);
 
 const Navbar = ({ children }) => {
   return (
@@ -138,7 +146,6 @@ const NumResults = ({ movies }) => {
 };
 
 const Main = ({ children }) => {
-
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
       {children}
@@ -177,12 +184,12 @@ const Movie = ({ movie }) => {
     <li className="flex items-center space-x-4 border-b border-white/10 pb-3 cursor-pointer hover:bg-gray-700 p-2 rounded-lg">
       <img
         className="w-16 h-20 object-cover rounded-lg"
-        src={movie.poster}
-        alt={movie.title}
+        src={movie.Poster}
+        alt={movie.Title}
       />
       <div>
-        <h3 className="font-bold text-white">{movie.title}</h3>
-        <p className="text-sm text-gray-400">🗓️ {movie.year}</p>
+        <h3 className="font-bold text-white">{movie.Title}</h3>
+        <p className="text-sm text-gray-400">🗓️ {movie.Year}</p>
       </div>
     </li>
   );
