@@ -37,7 +37,7 @@ function UsePopcorn() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
 
-  const query = "interstellar";
+  const query = "shdjlkf";
 
   // useEffect(() => {
   //   setIsLoading(true);
