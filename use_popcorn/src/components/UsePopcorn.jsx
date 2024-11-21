@@ -36,6 +36,7 @@ function UsePopcorn() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const query = "interstellar";
 
@@ -54,14 +55,25 @@ function UsePopcorn() {
   // }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     const fetchMovies = async () => {
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-      );
-      const data = await res.json();
-      setMovies(data.Search);
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+        );
+
+        if (!res.ok)
+          throw new Error("Something went wrong with fetching the movies");
+
+        const data = await res.json();
+        // if (data.Response)
+        setMovies(data.Search);
+      } catch (err) {
+        console.error(err.message);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchMovies();
   }, []);
@@ -78,17 +90,29 @@ function UsePopcorn() {
       </Navbar>
 
       <Main>
-        {/* <Box>
-          <MovieList movies={movies} />
+        {/* <Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box> */}
+        <Box>
+          {/* {isLoading ? (
+            <Loader />
+          ) : error ? (
+            <ErrorMsg message={error} />
+          ) : (
+            <MovieList movies={movies} />
+          )} */}
+
+          {isLoading && <Loader />}
+          {!isLoading && error && <ErrorMsg message={error} />}
+          {!isLoading && !error && <MovieList movies={movies} />}
         </Box>
 
         <Box>
           <WatchedSummary watched={watched} />
           <WatchedList watched={watched} />
-        </Box> */}
+        </Box>
 
         {/* This part can also be handled as followings, like we see in react-router */}
-        <Box element={isLoading ? <Loader /> : <MovieList movies={movies} />} />
+        {/* <Box element={<MovieList movies={movies} />} />
+        
         <Box
           element={
             <>
@@ -96,17 +120,25 @@ function UsePopcorn() {
               <WatchedList watched={watched} />
             </>
           }
-        />
+        /> */}
       </Main>
     </section>
   );
 }
 
-const Loader = () => (
-  <p className="h-full w-full flex items-center justify-center text-4xl font-poppins">
-    LOADING...
+const ErrorMsg = ({ message }) => (
+  <p className="h-full w-full flex justify-center">
+    <span>🚫</span> {message}
   </p>
 );
+
+const Loader = () => {
+  return (
+    <div className="h-full w-full flex items-center justify-center">
+      <div className="w-20 h-20 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+    </div>
+  );
+};
 
 const Navbar = ({ children }) => {
   return (
@@ -153,7 +185,7 @@ const Main = ({ children }) => {
   );
 };
 
-const Box = ({ element }) => {
+const Box = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -164,7 +196,7 @@ const Box = ({ element }) => {
       >
         {isOpen ? "-" : "+"}
       </button>
-      {isOpen && element}
+      {isOpen && children}
     </aside>
   );
 };
