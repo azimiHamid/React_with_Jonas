@@ -276,8 +276,8 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
   }, [selectedId]);
 
   useEffect(() => {
-    document.title = "tEST";
-  }, []);
+    document.title = `MOVIE | ${title}`;
+  }, [title]);
 
   return (
     <article className="flex flex-col text-white rounded-lg overflow-hidden w-full max-w-4xl mx-auto">
