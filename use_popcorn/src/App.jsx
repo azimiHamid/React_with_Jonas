@@ -5,7 +5,13 @@ function App() {
   return (
     <>
       <UsePopcorn />
-      {/* <StarRating /> */}
+      {/* <StarRating
+        maxRating={5}
+        color="red"
+        size={64}
+        messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
+        defaultRating={3}
+      /> */}
     </>
   );
 }

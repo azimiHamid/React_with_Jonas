@@ -30,15 +30,6 @@ function App() {
       <Accordion2 />
       <TipCalculator />
       <BillSplitter />
-
-      {/* <StarRating maxRating={10} /> */}
-      {/* <StarRating
-        maxRating={5}
-        color="red"
-        size={64}
-        messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
-        defaultRating={3}
-      /> */}
       <TextExpander />
       <p></p>
     </div>

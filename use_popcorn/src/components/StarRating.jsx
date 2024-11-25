@@ -26,7 +26,7 @@ function StarRating({
   };
 
   return (
-    <article className="grid gap-4 md:grid-cols-2 md:gap-6 items-center">
+    <article className="flex gap-4 flex-wrap md:gap-6 items-center">
       <div
         className="flex flex-wrap justify-center"
         role="radiogroup"
