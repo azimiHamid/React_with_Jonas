@@ -17,12 +17,14 @@ function StarRating({
   size = 48,
   messages = [],
   defaultRating = 0,
+  onSetRating,
 }) {
   const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);
 
-  const handleRating = (rating) => {
-    setRating(rating);
+  const handleRating = (newRating) => {
+    setRating(newRating);
+    if (onSetRating) onSetRating(newRating); // Call the callback with the new rating
   };
 
   return (

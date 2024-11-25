@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 
 const average = (arr) =>
-  arr.length
-    ? Math.round(arr.reduce((acc, curr) => acc + curr, 0) / arr.length)
-    : 0;
+  arr.length ? arr.reduce((acc, curr) => acc + curr, 0) / arr.length : 0;
 
 const KEY = "10f92d62";
 
@@ -27,6 +25,11 @@ function UsePopcorn() {
 
   const handleAddWatched = (movie) => {
     setWatched((prev) => [movie, ...prev]);
+  };
+
+  const handleDeleteWatched = (id) => {
+    const updatedWatchedMovies = watched.filter((m) => m.imdbID !== id);
+    setWatched(updatedWatchedMovies);
   };
 
   useEffect(() => {
@@ -88,11 +91,15 @@ function UsePopcorn() {
               onCloseMovie={handleCloseMovie}
               selectedId={selectedId}
               onAddWatched={handleAddWatched}
+              watched={watched}
             />
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedList watched={watched} />
+              <WatchedList
+                watched={watched}
+                onDeleteWatched={handleDeleteWatched}
+              />
             </>
           )}
         </Box>
@@ -217,10 +224,15 @@ const Movie = ({ movie, onSelectMovie }) => {
   );
 };
 
-const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
+const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [userRating, setUserRating] = useState('')
+  const [userRating, setUserRating] = useState("");
+
+  const isWatched = watched.map((m) => m.imdbID).includes(selectedId);
+  const watchedUserRating = watched.find(
+    (m) => m.imdbID === selectedId
+  )?.userRating;
 
   const {
     Title: title,
@@ -243,6 +255,7 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
       poster,
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
+      userRating,
     };
     onAddWatched(newWatchedMovie);
     onCloseMovie();
@@ -261,6 +274,10 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 
     getMovieDeatails();
   }, [selectedId]);
+
+  useEffect(() => {
+    document.title = "tEST";
+  }, []);
 
   return (
     <article className="flex flex-col text-white rounded-lg overflow-hidden w-full max-w-4xl mx-auto">
@@ -318,16 +335,36 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 
           <div className="p-6">
             <div className="rounded-xl flex items-center flex-col bg-gray-900 p-5">
-              <StarRating size={26} 
-              color="#F9C23C" maxRating={10}
-              onClick={setUserRating}
-               />
-              <button
-                className="bg-[#6741D9] py-1 px-10 mt-5 rounded-full"
-                onClick={handleAdd}
-              >
-                + Add to list
-              </button>
+              {!isWatched ? (
+                <>
+                  <StarRating
+                    size={26}
+                    color="#F9C23C"
+                    maxRating={10}
+                    onSetRating={setUserRating}
+                  />
+                  {userRating > 0 && (
+                    <button
+                      className="bg-[#6741D9] py-1 px-10 mt-5 rounded-full"
+                      onClick={handleAdd}
+                    >
+                      + Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p className="text-gray-400 text-center italic">
+                  You have already rated this movie:
+                  <span className="text-yellow-400 font-semibold">
+                    {" "}
+                    {watchedUserRating} ⭐
+                  </span>
+                  <br />
+                  <span className="text-gray-500 text-sm">
+                    Rated on: {new Date().toLocaleDateString()}
+                  </span>
+                </p>
+              )}
             </div>
             {/* Movie Details */}
             <div className=" mt-5">
@@ -352,8 +389,12 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 };
 
 const WatchedSummary = ({ watched }) => {
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watched.map((movie) => movie.userRating));
+  const avgImdbRating = average(
+    watched.map((movie) => movie.imdbRating)
+  ).toFixed(1);
+  const avgUserRating = average(
+    watched.map((movie) => movie.userRating)
+  ).toFixed(1);
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
   return (
@@ -369,17 +410,21 @@ const WatchedSummary = ({ watched }) => {
   );
 };
 
-const WatchedList = ({ watched }) => {
+const WatchedList = ({ watched, onDeleteWatched }) => {
   return (
     <ul>
       {watched.map((movie, idx) => (
-        <WatchedMovie movie={movie} key={idx} />
+        <WatchedMovie
+          movie={movie}
+          key={idx}
+          onDeleteWatched={onDeleteWatched}
+        />
       ))}
     </ul>
   );
 };
 
-const WatchedMovie = ({ movie }) => {
+const WatchedMovie = ({ movie, onDeleteWatched }) => {
   return (
     <li className="flex items-center justify-between my-3 p-2 bg-gray-700 rounded-lg border border-gray-600">
       <div className="flex items-center space-x-4">
@@ -396,7 +441,10 @@ const WatchedMovie = ({ movie }) => {
           </p>
         </div>
       </div>
-      <button className="bg-red-600 hover:bg-red-500 text-white p-2 flex items-center justify-center rounded-full w-[30px] h-[30px]">
+      <button
+        onClick={() => onDeleteWatched(movie.imdbID)}
+        className="bg-red-600 hover:bg-red-500 text-white p-2 flex items-center justify-center rounded-full w-[30px] h-[30px]"
+      >
         x
       </button>
     </li>
