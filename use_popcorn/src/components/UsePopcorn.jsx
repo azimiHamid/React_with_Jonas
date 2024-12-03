@@ -33,12 +33,14 @@ function UsePopcorn() {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchMovies = async () => {
       try {
         setError("");
         setIsLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+          { signal: AbortController.signal }
         );
 
         if (!res.ok) throw new Error("Can't fetch movies");
@@ -50,7 +52,7 @@ function UsePopcorn() {
         setMovies(data.Search);
       } catch (err) {
         console.error(err.message);
-        setError(err.message);
+        if (err.name !== "AbortError") setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -63,6 +65,10 @@ function UsePopcorn() {
     }
 
     fetchMovies();
+
+    return () => {
+      controller.abort();
+    };
   }, [query]);
 
   return (
@@ -262,7 +268,7 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
   };
 
   useEffect(() => {
-    const getMovieDeatails = async () => {
+    const getMovieDetails = async () => {
       setIsLoading(true);
       const res = await fetch(
         `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
@@ -272,11 +278,16 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
       setIsLoading(false);
     };
 
-    getMovieDeatails();
+    getMovieDetails();
   }, [selectedId]);
 
   useEffect(() => {
+    if (!title) return;
     document.title = `MOVIE | ${title}`;
+
+    return () => {
+      document.title = "usePopcorn";
+    };
   }, [title]);
 
   return (
@@ -395,7 +406,7 @@ const WatchedSummary = ({ watched }) => {
   const avgUserRating = average(
     watched.map((movie) => movie.userRating)
   ).toFixed(1);
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
+  const avgRuntime = average(watched.map((movie) => movie.runtime)).toFixed();
 
   return (
     <div className="space-y-4 mt-4">
