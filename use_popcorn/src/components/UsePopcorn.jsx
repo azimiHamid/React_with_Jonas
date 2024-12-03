@@ -32,8 +32,6 @@ function UsePopcorn() {
     setWatched(updatedWatchedMovies);
   };
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     const controller = new AbortController();
     const fetchMovies = async () => {
@@ -269,6 +267,19 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
     onAddWatched(newWatchedMovie);
     onCloseMovie();
   };
+
+  useEffect(() => {
+    const callback = (e) => {
+      if (e.code === "Backspace") {
+        onCloseMovie();
+      }
+    }
+
+    document.addEventListener("keydown", callback);
+    return () => {
+      document.removeEventListener('keydown', callback)
+    };
+  }, [onCloseMovie]);
 
   useEffect(() => {
     const getMovieDetails = async () => {
