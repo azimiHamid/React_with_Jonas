@@ -1,1 +1,0 @@
-Empty text file for react-tips git branch
