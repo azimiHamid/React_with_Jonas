@@ -32,6 +32,8 @@ function UsePopcorn() {
     setWatched(updatedWatchedMovies);
   };
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     const controller = new AbortController();
     const fetchMovies = async () => {
@@ -50,6 +52,7 @@ function UsePopcorn() {
         if (data.Response === "False") throw new Error("Movie not found");
 
         setMovies(data.Search);
+        setError("");
       } catch (err) {
         console.error(err.message);
         if (err.name !== "AbortError") setError(err.message);
