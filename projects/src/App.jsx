@@ -1,5 +1,6 @@
 import Accordion from "./components/Accordion";
 import Accordion2 from "./components/Accordion2";
+import Converter from "./components/currency-converter/Converter";
 import DateCounter from "./components/DateCounter";
 import DateCounter2 from "./components/DateCounter2";
 import BillSplitter from "./components/eat_n_split/BillSplitter";
@@ -12,7 +13,6 @@ import Steps from "./components/Steps";
 import Steps2 from "./components/Steps2";
 import TextExpander from "./components/TextExpander";
 import TipCalculator from "./components/tip_calculator/TipCalculator";
-// import StarRating from "./components/use_popcorn/StarRating";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
       <TipCalculator />
       <BillSplitter />
       <TextExpander />
-      <p></p>
+      <Converter />
     </div>
   );
 }
