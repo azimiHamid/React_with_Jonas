@@ -17,7 +17,6 @@ import TipCalculator from "./components/tip_calculator/TipCalculator";
 function App() {
   return (
     <div className="w-full min-h-screen">
-      <Converter />
       <ProfileCard />
       <PizzaMenu />
       <Steps />
@@ -32,6 +31,7 @@ function App() {
       <TipCalculator />
       <BillSplitter />
       <TextExpander />
+      <Converter />
     </div>
   );
 }

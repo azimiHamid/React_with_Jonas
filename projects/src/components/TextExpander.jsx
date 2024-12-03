@@ -3,7 +3,8 @@ import { useState } from "react";
 /* eslint-disable react/prop-types */
 function TextExpander() {
   return (
-    <section className="w-full min-h-screen flex flex-col items-center font-poppins p-4">
+    <section className="w-full min-h-screen flex flex-col items-center font-poppins p-4 bg-purple-50">
+      <h2 className="my-5 text-3xl font-semibold">Text Expander</h2>
       <TextContent>
         Space travel is the ultimate adventure! Imagine soaring past the stars
         and exploring new worlds. It&apos;s the stuff of dreams and science
