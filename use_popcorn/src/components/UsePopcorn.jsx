@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 
 const average = (arr) =>
@@ -8,9 +8,13 @@ const average = (arr) =>
 const KEY = "10f92d62";
 
 function UsePopcorn() {
-  const [query, setQuery] = useState("interstellar");
+  const [query, setQuery] = useState("Jumanji");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  // const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(() => {
+    const storedValue = JSON.parse(localStorage.getItem("watched"));
+    return storedValue ? storedValue : [];
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
@@ -25,12 +29,19 @@ function UsePopcorn() {
 
   const handleAddWatched = (movie) => {
     setWatched((prev) => [movie, ...prev]);
+    // Using local storage without effect (instead used event listener)
+    // localStorage.setItem("watched", JSON.stringify([movie, watched]));
   };
 
   const handleDeleteWatched = (id) => {
     const updatedWatchedMovies = watched.filter((m) => m.imdbID !== id);
     setWatched(updatedWatchedMovies);
   };
+
+  // Local storage effect
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -163,8 +174,38 @@ const Logo = () => {
 };
 
 const Search = ({ query, setQuery }) => {
+  // Create a reference to hold the DOM element
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    function callback(e) {
+      if (document.activeElement === inputEl.current) return;
+
+      if (e.code === "Enter") {
+        // When the component mounts, focus on the input element
+        // inputEl.current now refers to the <input> DOM element
+        inputEl.current.focus();
+        setQuery("");
+      }
+    }
+
+    document.addEventListener("keydown", callback);
+
+    return () => {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [setQuery]);
+
+  // Vanilla JS (imperative): Directly selecting and manipulating the DOM to focus on the input element, but we will use the hook useRef in react to handle this.
+  // useEffect(() => {
+  //   const elem = document.querySelector('input[type="search"]');
+  //   elem.focus();
+  // }, []); // Runs only once when the component mounts
+
+  // but, React is (declarative): The state and UI are tied together, and React handles the DOM updates for you
   return (
     <input
+      ref={inputEl} // Associate the input element with the ref
       type="search"
       placeholder="Search movies..."
       value={query}
@@ -236,6 +277,14 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
 
+  const countRef = useRef(0);
+  let count = 0;
+
+  useEffect(() => {
+    if (userRating) countRef.current++;
+    if (userRating) count++;
+  }, [userRating, count]);
+
   const isWatched = watched.map((m) => m.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
     (m) => m.imdbID === selectedId
@@ -263,6 +312,8 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecisions: countRef.current,
+      count,
     };
     onAddWatched(newWatchedMovie);
     onCloseMovie();
@@ -273,11 +324,11 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
       if (e.code === "Backspace") {
         onCloseMovie();
       }
-    }
+    };
 
     document.addEventListener("keydown", callback);
     return () => {
-      document.removeEventListener('keydown', callback)
+      document.removeEventListener("keydown", callback);
     };
   }, [onCloseMovie]);
 
