@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { useMovies } from "../hooks/useMovies";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 const average = (arr) =>
   arr.length ? arr.reduce((acc, curr) => acc + curr, 0) / arr.length : 0;
@@ -11,14 +12,9 @@ const KEY = "10f92d62";
 function UsePopcorn() {
   const [query, setQuery] = useState("Jumanji");
   const [selectedId, setSelectedId] = useState(null);
-  // custom hook
+  // custom hooks
   const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
-
-  // const [watched, setWatched] = useState([]);
-  const [watched, setWatched] = useState(() => {
-    const storedValue = JSON.parse(localStorage.getItem("watched"));
-    return storedValue ? storedValue : [];
-  });
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -38,11 +34,6 @@ function UsePopcorn() {
     const updatedWatchedMovies = watched.filter((m) => m.imdbID !== id);
     setWatched(updatedWatchedMovies);
   };
-
-  // Local storage effect
-  useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify(watched));
-  }, [watched]);
 
   return (
     <>
