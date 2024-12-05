@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { useMovies } from "../hooks/useMovies";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { useKey } from "../hooks/useKey";
 
 const average = (arr) =>
   arr.length ? arr.reduce((acc, curr) => acc + curr, 0) / arr.length : 0;
@@ -129,24 +130,13 @@ const Search = ({ query, setQuery }) => {
   // Create a reference to hold the DOM element
   const inputEl = useRef(null);
 
-  useEffect(() => {
-    function callback(e) {
-      if (document.activeElement === inputEl.current) return;
-
-      if (e.code === "Enter") {
-        // When the component mounts, focus on the input element
-        // inputEl.current now refers to the <input> DOM element
-        inputEl.current.focus();
-        setQuery("");
-      }
-    }
-
-    document.addEventListener("keydown", callback);
-
-    return () => {
-      document.removeEventListener("keydown", callback);
-    };
-  }, [setQuery]);
+  useKey("enter", function () {
+    if (document.activeElement === inputEl.current) return;
+    // When the component mounts, focus on the input element
+    // inputEl.current now refers to the <input> DOM element
+    inputEl.current.focus();
+    setQuery("");
+  });
 
   // Vanilla JS (imperative): Directly selecting and manipulating the DOM to focus on the input element, but we will use the hook useRef in react to handle this.
   // useEffect(() => {
@@ -271,18 +261,7 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
     onCloseMovie();
   };
 
-  useEffect(() => {
-    const callback = (e) => {
-      if (e.code === "Backspace") {
-        onCloseMovie();
-      }
-    };
-
-    document.addEventListener("keydown", callback);
-    return () => {
-      document.removeEventListener("keydown", callback);
-    };
-  }, [onCloseMovie]);
+  useKey("backspace", onCloseMovie);
 
   useEffect(() => {
     const getMovieDetails = async () => {
