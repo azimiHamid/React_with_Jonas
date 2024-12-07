@@ -6,7 +6,7 @@ const icons = [
   { codes: [1], icon: "🌤️" },
   { codes: [2], icon: "🌥️" },
   { codes: [3], icon: "☁️" },
-  { codes: [45, 48], icon: "😶‍🌫️" },
+  { codes: [45, 48], icon: "🌫️" },
   { codes: [51, 56, 61, 66, 80], icon: "🌦️" },
   { codes: [53, 55, 63, 65, 57, 67, 81, 82], icon: "🌧️" },
   { codes: [71, 73, 75, 77, 85, 86], icon: "🌨️" },
@@ -86,7 +86,7 @@ class App extends React.Component {
             placeholder="Search from location..."
           />
         </article>
-        <button onClick={this.fetchWeather}>Get weather</button>
+        <button onClick={this.fetchWeather}>Get Weather</button>
         {this.state.isLoading && <p className="loader">Loading...</p>}
 
         {this.state.weather.weathercode && (
