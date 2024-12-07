@@ -1,22 +1,23 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-const icons = [
-  { codes: [0], icon: "☀️" },
-  { codes: [1], icon: "🌤️" },
-  { codes: [2], icon: "🌥️" },
-  { codes: [3], icon: "☁️" },
-  { codes: [45, 48], icon: "😶‍🌫️" },
-  { codes: [51, 56, 61, 66, 80], icon: "🌦️" },
-  { codes: [53, 55, 63, 65, 57, 67, 81, 82], icon: "🌧️" },
-  { codes: [71, 73, 75, 77, 85, 86], icon: "🌨️" },
-  { codes: [95], icon: "🌩️" },
-  { codes: [96, 99], icon: "⛈️" },
-];
-
 function getWeatherIcon(code) {
-  const match = icons.find((item) => item.codes.includes(code));
-  return match ? match.icon : "NOT FOUND";
+  const icons = new Map([
+    [[0], "☀️"],
+    [[1], "🌤️"],
+    [[2], "🌥️"],
+    [[3], "☁️"],
+    [[45, 48], "🌫️"],
+    [[51, 56, 61, 66, 80], "🌦️"],
+    [[53, 55, 63, 65, 57, 67, 81, 82], "🌧️"],
+    [[71, 73, 75, 77, 85, 86], "🌨️"],
+    [[95], "🌩️"],
+    [[96, 99], "⛈️"],
+  ]);
+
+  const arr = [...icons.keys()].find((key) => key.includes(code));
+  if (!arr) return "NOT FOUND";
+  return icons.get(arr);
 }
 
 function convertToFlag(countryCode) {
@@ -35,15 +36,18 @@ function formatDay(dateStr) {
 }
 
 class App extends React.Component {
-  state = {
-    location: "kabul",
-    isLoading: false,
-    dipslayLocation: "",
-    weather: {},
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: "kabul",
+      isLoading: false,
+      dipslayLocation: "",
+      weather: {},
+    };
+    this.fetchWeather = this.fetchWeather.bind(this);
+  }
 
-  // when using arrow function no need to bind it in constructor
-  fetchWeather = async () => {
+  async fetchWeather() {
     try {
       this.setState({ isLoading: true });
       const geoRes = await fetch(
@@ -72,7 +76,7 @@ class App extends React.Component {
     } finally {
       this.setState({ isLoading: false });
     }
-  };
+  }
 
   render() {
     return (
@@ -112,7 +116,7 @@ class Weather extends React.Component {
     } = this.props.weather;
     return (
       <div className="weather-report">
-        <h2>{this.props.location}</h2>
+        <h2>Weather {this.props.location}</h2>
         <ul className="weekdays-weather-list">
           {dates.map((date, idx) => (
             <Day
