@@ -16,7 +16,9 @@ body {
 }
 
 .app {
-  background-color: white;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   padding: 20px;
@@ -107,19 +109,28 @@ button:hover {
   font-weight: bold;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .weekdays-weather-list li {
-    flex: 1 1 45%;
+@media (max-width: 767px) {
+  .app {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .weather-report h2 {
+    color: #4123bc;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 400px) {
+  .app {
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 360px) {
   .weekdays-weather-list li {
     flex: 1 1 100%;
-  }
-
-  button {
-    font-size: 0.9rem;
   }
 }

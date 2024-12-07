@@ -36,7 +36,7 @@ function formatDay(dateStr) {
 
 class App extends React.Component {
   state = {
-    location: "kabul",
+    location: "",
     isLoading: false,
     dipslayLocation: "",
     weather: {},
@@ -44,6 +44,7 @@ class App extends React.Component {
 
   // when using arrow function no need to bind it in constructor
   fetchWeather = async () => {
+    if (this.state.location.length < 2) return this.setState({ weather: {} });
     try {
       this.setState({ isLoading: true });
       const geoRes = await fetch(
@@ -74,19 +75,33 @@ class App extends React.Component {
     }
   };
 
+  setLocation = (e) => this.setState({ location: e.target.value });
+
+  // This is like useEffect with [] dependency
+  componentDidMount() {
+    // this.fetchWeather();
+    this.setState({
+      location: localStorage.getItem("location") || "",
+    });
+  }
+
+  // This is like useEffect with [location] dependency
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.location !== prevState.location) {
+      this.fetchWeather();
+      localStorage.setItem("location", this.state.location);
+    }
+  }
+
   render() {
     return (
       <div className="app">
         <h1>Classy Weather</h1>
-        <article>
-          <input
-            onChange={(e) => this.setState({ location: e.target.value })}
-            value={this.state.location}
-            type="text"
-            placeholder="Search from location..."
-          />
-        </article>
-        <button onClick={this.fetchWeather}>Get Weather</button>
+        <Input
+          location={this.state.location}
+          onSetLocation={this.setLocation}
+        />
+        {/* <button onClick={this.fetchWeather}>Get Weather</button> */}
         {this.state.isLoading && <p className="loader">Loading...</p>}
 
         {this.state.weather.weathercode && (
@@ -102,7 +117,27 @@ class App extends React.Component {
 
 export default App;
 
+class Input extends React.Component {
+  render() {
+    return (
+      <article>
+        <input
+          onChange={this.props.onSetLocation}
+          value={this.props.location}
+          type="text"
+          placeholder="Search from location..."
+        />
+      </article>
+    );
+  }
+}
+
 class Weather extends React.Component {
+  // This is like the cleanup function in useEffect hook
+  componentWillUnmount() {
+    console.log("component unmounted");
+  }
+
   render() {
     const {
       temperature_2m_max: maxTemp,
