@@ -8,7 +8,7 @@ function Header() {
         src={ReactLogo}
         alt="react-logo"
       />
-      <h1 className="text-gray-300 text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold font-ralewayDots text-center md:text-left">
+      <h1 className="text-gray-300 text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold md:font-normal font-ralewayDots text-center md:text-left">
         The React Quiz
       </h1>
     </header>

@@ -1,8 +1,8 @@
-function Main() {
+/* eslint-disable react/prop-types */
+function Main({ children }) {
   return (
-    <main className="">
-      <p>1/15</p>
-      <p>Questions</p>
+    <main className="relative flex flex-col items-center justify-center">
+      {children}
     </main>
   );
 }
