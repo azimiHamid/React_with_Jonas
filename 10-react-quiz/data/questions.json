@@ -1,0 +1,169 @@
+{
+    "questions": [
+        {
+            "question": "What is React Fiber?",
+            "options": [
+                "A new rendering algorithm in React",
+                "A state management library",
+                "A CSS-in-JS solution",
+                "A testing framework"
+            ],
+            "correctOption": 0,
+            "points": 10
+        },
+        {
+            "question": "Which hook is used for performance optimization in functional components?",
+            "options": [
+                "useState",
+                "useMemo",
+                "useEffect",
+                "useReducer"
+            ],
+            "correctOption": 1,
+            "points": 10
+        },
+        {
+            "question": "What does the `useRef` hook primarily provide?",
+            "options": [
+                "Persistent values across renders",
+                "State updates",
+                "API calls",
+                "DOM manipulations"
+            ],
+            "correctOption": 3,
+            "points": 10
+        },
+        {
+            "question": "What does the Context API solve?",
+            "options": [
+                "Complex state management",
+                "Prop drilling",
+                "Testing React components",
+                "Routing"
+            ],
+            "correctOption": 1,
+            "points": 10
+        },
+        {
+            "question": "Which lifecycle method does `useEffect` hook replicate?",
+            "options": [
+                "componentDidMount",
+                "componentDidUpdate",
+                "componentWillUnmount",
+                "All of the above"
+            ],
+            "correctOption": 3,
+            "points": 10
+        },
+        {
+            "question": "What is the purpose of React's `Suspense` component?",
+            "options": [
+                "Error handling",
+                "Lazy loading components",
+                "State management",
+                "Context sharing"
+            ],
+            "correctOption": 1,
+            "points": 10
+        },
+        {
+            "question": "What is the purpose of `React.memo`?",
+            "options": [
+                "Prevent unnecessary re-renders of a component",
+                "Replace state management libraries",
+                "Manage side effects in functional components",
+                "Handle errors in React"
+            ],
+            "correctOption": 0,
+            "points": 10
+        },
+        {
+            "question": "What is the main advantage of using `useReducer` over `useState`?",
+            "options": [
+                "Simplifies DOM updates",
+                "Handles complex state logic",
+                "Reduces memory usage",
+                "Avoids prop drilling"
+            ],
+            "correctOption": 1,
+            "points": 10
+        },
+        {
+            "question": "What is the primary use of the `React.Fragment` component?",
+            "options": [
+                "To render multiple elements without adding extra nodes to the DOM",
+                "To wrap all stateful components",
+                "To handle lazy loading",
+                "To encapsulate side effects"
+            ],
+            "correctOption": 0,
+            "points": 10
+        },
+        {
+            "question": "Which hook is used to fetch data in a React functional component?",
+            "options": [
+                "useFetch",
+                "useState",
+                "useEffect",
+                "useData"
+            ],
+            "correctOption": 2,
+            "points": 10
+        },
+        {
+            "question": "What is the key difference between `React.PureComponent` and `React.Component`?",
+            "options": [
+                "PureComponent uses shallow comparison for props and state",
+                "PureComponent does not support lifecycle methods",
+                "PureComponent is only for functional components",
+                "PureComponent is faster by default"
+            ],
+            "correctOption": 0,
+            "points": 10
+        },
+        {
+            "question": "What does the `key` prop in a list do in React?",
+            "options": [
+                "Improves performance",
+                "Identifies which items have changed",
+                "Provides a unique identity to list elements",
+                "All of the above"
+            ],
+            "correctOption": 3,
+            "points": 10
+        },
+        {
+            "question": "What does `useImperativeHandle` do?",
+            "options": [
+                "Customizes the instance value exposed by a `ref`",
+                "Manages side effects",
+                "Handles state logic",
+                "Improves rendering performance"
+            ],
+            "correctOption": 0,
+            "points": 10
+        },
+        {
+            "question": "What is the purpose of the `ErrorBoundary` component in React?",
+            "options": [
+                "To manage global state",
+                "To handle rendering errors in the component tree",
+                "To optimize rendering performance",
+                "To provide type checking for props"
+            ],
+            "correctOption": 1,
+            "points": 10
+        },
+        {
+            "question": "What is the significance of the `lazy` function in React?",
+            "options": [
+                "Handles lazy state updates",
+                "Enables lazy loading of components",
+                "Manages asynchronous actions",
+                "Improves the performance of state updates"
+            ],
+            "correctOption": 1,
+            "points": 10
+        }
+    ]
+}

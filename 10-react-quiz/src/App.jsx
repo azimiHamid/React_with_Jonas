@@ -1,10 +1,12 @@
-import Counter from "./components/test/Counter";
+import Header from "./components/Header";
+import Main from "./components/Main";
 
 function App() {
   return (
-    <>
-      <Counter />
-    </>
+    <section className="flex flex-col text-gray-300">
+      <Header />
+      <Main />
+    </section>
   );
 }
 

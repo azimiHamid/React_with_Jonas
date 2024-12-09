@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ['"Poppins"', "sans-serif"], // Poppins font
+        ralewayDots: ['"Raleway Dots"', "cursive"], // Raleway Dots font
+      },
+    },
   },
   plugins: [],
 };
