@@ -1,9 +1,11 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
-import DateCounter from "./components/DateCounter";
+import Counter from "./components/test/Counter";
 
 function App() {
-  return <DateCounter />;
+  return (
+    <>
+      <Counter />
+    </>
+  );
 }
 
 export default App;
