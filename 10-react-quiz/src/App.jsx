@@ -42,7 +42,7 @@ function App() {
       <Header />
       <Main>
         {status === "loading" && <Loader />}
-        {status === "error" && <Error />}
+        {status === "error" && <Error message="oops! Something went wrong" />}
       </Main>
     </section>
   );
