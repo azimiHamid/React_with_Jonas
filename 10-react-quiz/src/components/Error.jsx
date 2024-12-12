@@ -30,7 +30,7 @@ function Error({ message = "Something went wrong. Please try again!" }) {
         <h1 className="text-3xl font-bold text-red-600 mb-4">Error</h1>
         <p className="text-lg text-gray-100">{message}</p>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center justify-center">
           <button
             onClick={handleReload}
             className="mt-4 px-4 py-2 text-white rounded bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-red-400"
@@ -41,7 +41,7 @@ function Error({ message = "Something went wrong. Please try again!" }) {
           <button
             ref={buttonRef}
             onClick={handleDismiss}
-            className="mt-4 px-4 py-2 text-white rounded hover:bg-red-600 focus:ring-2 focus:ring-red-400"
+            className="mt-4 px-4 py-2 text-white rounded bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-400"
             aria-label="Dismiss error message"
           >
             Dismiss
