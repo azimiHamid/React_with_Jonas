@@ -16,7 +16,9 @@ function FinishScreen({ points, maxPossiblePoints, highscore, dispatch }) {
         <strong>{points}</strong> out of {maxPossiblePoints} (
         {Math.ceil(percentage)}%)
       </p>
-      <p className="my-10 text-2xl">(Highscore: {highscore} points)</p>
+      <p className="my-10 text-2xl">
+        (Highscore: <b>{highscore}</b> points)
+      </p>
       <button
         className="px-12 py-3 text-xl bg-gray-700 text-white font-medium rounded-full shadow-md hover:bg-gray-800 focus:outline-none"
         onClick={() => dispatch({ type: "restart" })}

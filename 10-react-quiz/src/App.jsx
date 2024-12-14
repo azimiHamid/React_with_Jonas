@@ -5,9 +5,9 @@ import Error from "./components/Error";
 import Main from "./components/Main";
 import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
-import NextButton from "./components/NextButton";
 import Progress from "./components/Progress";
 import FinishScreen from "./components/FinishScreen";
+import Footer from "./components/Footer";
 
 const initialState = {
   questions: [],
@@ -98,14 +98,12 @@ function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <div className="flex w-full max-w-xl place-content-end">
-              <NextButton
-                dispatch={dispatch}
-                answer={answer}
-                numOfQuestions={numOfQuestions}
-                index={index}
-              />
-            </div>
+            <Footer
+              dispatch={dispatch}
+              answer={answer}
+              numOfQuestions={numOfQuestions}
+              index={index}
+            />
           </>
         )}
 
