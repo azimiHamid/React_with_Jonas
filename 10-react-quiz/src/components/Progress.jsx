@@ -5,7 +5,7 @@ function Progress({ index, numOfQuestions, points, maxPossiblePoints, answer }) 
       <progress
         max={numOfQuestions}
         value={index + Number(answer !== null)}
-        className="w-full h-4 appearance-none bg-gray-200 rounded-lg overflow-hidden [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-value]:bg-gray-500 [&::-moz-progress-bar]:bg-gray-500"
+        className="w-full h-4 appearance-none bg-gray-200 rounded-xl overflow-hidden [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-value]:bg-gray-500 [&::-moz-progress-bar]:bg-gray-500"
       />
 
       <div className="flex justify-between mt-5">

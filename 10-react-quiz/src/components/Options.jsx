@@ -12,8 +12,8 @@ function Options({ question, dispatch, answer }) {
           ${
             hasAnswered
               ? idx === question.correctOption
-                ? "bg-[#0F8CA2]"
-                : "bg-[#FEA243]"
+                ? "bg-teal-600"
+                : "bg-orange-600"
               : ""
           } cursor-pointer w-full max-w-xl text-left py-4 px-6 bg-gray-800 text-gray-50 rounded-full shadow-md hover:bg-gray-700 focus:outline-none hover:scale-95 transition-transform duration-300`}
         >
