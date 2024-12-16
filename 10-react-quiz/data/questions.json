@@ -9,7 +9,7 @@
                 "A testing framework"
             ],
             "correctOption": 0,
-            "points": 10
+            "points": 15
         },
         {
             "question": "Which hook is used for performance optimization in functional components?",
@@ -53,7 +53,7 @@
                 "All of the above"
             ],
             "correctOption": 3,
-            "points": 10
+            "points": 15
         },
         {
             "question": "What is the purpose of React's `Suspense` component?",
@@ -86,7 +86,7 @@
                 "Avoids prop drilling"
             ],
             "correctOption": 1,
-            "points": 10
+            "points": 15
         },
         {
             "question": "What is the primary use of the `React.Fragment` component?",
@@ -97,7 +97,7 @@
                 "To encapsulate side effects"
             ],
             "correctOption": 0,
-            "points": 10
+            "points": 5
         },
         {
             "question": "Which hook is used to fetch data in a React functional component?",
@@ -119,7 +119,7 @@
                 "PureComponent is faster by default"
             ],
             "correctOption": 0,
-            "points": 10
+            "points": 15
         },
         {
             "question": "What does the `key` prop in a list do in React?",
@@ -130,7 +130,7 @@
                 "All of the above"
             ],
             "correctOption": 3,
-            "points": 10
+            "points": 5
         },
         {
             "question": "What does `useImperativeHandle` do?",
@@ -141,7 +141,7 @@
                 "Improves rendering performance"
             ],
             "correctOption": 0,
-            "points": 10
+            "points": 15
         },
         {
             "question": "What is the purpose of the `ErrorBoundary` component in React?",
@@ -152,7 +152,7 @@
                 "To provide type checking for props"
             ],
             "correctOption": 1,
-            "points": 10
+            "points": 15
         },
         {
             "question": "What is the significance of the `lazy` function in React?",
