@@ -13,10 +13,12 @@ import Steps from "./components/Steps";
 import Steps2 from "./components/Steps2";
 import TextExpander from "./components/TextExpander";
 import TipCalculator from "./components/tip_calculator/TipCalculator";
+import BankAccount from "./components/useReducer/BankAccount";
 
 function App() {
   return (
     <div className="w-full min-h-screen">
+      <BankAccount />
       <ProfileCard />
       <PizzaMenu />
       <Steps />
