@@ -1,4 +1,6 @@
 import { useReducer } from "react";
+import Main from "./Main";
+
 
 // openAccount: false,
 //     deposit,
@@ -27,13 +29,13 @@ function BankAccount() {
   console.log(isActive);
 
   return (
-    <section className="bg-zinc-300 w-full min-h-screen flex bg-gradient-radial from-blue-300 to-transparent bg-opacity-30 backdrop-blur-lg text-center flex-col items-center font-poppins p-4">
+    <Main>
       <h1 className="text-3xl my-5 lg:my-12 lg:text-4xl py-3 px-4 bg-amber-600 font-semibold">
         useReducer Bank Account
       </h1>
 
-      <h4 className="text-2xl lg:text-3xl my-1 ">Balance: X</h4>
-      <h4 className="text-2xl lg:text-3xl my-1 ">Loan: X</h4>
+      <h4 className="text-2xl lg:text-3xl my-1">Balance: X</h4>
+      <h4 className="text-2xl lg:text-3xl my-1">Loan: X</h4>
 
       <button
         onClick={() => dispatch({ type: "isActive" })}
@@ -54,7 +56,7 @@ function BankAccount() {
         Deposit 150
       </button>
       <button
-        onClick={() => console.log("clikced")}
+        onClick={() => console.log("Withdraw")}
         disabled={!isActive}
         className={`${
           isActive ? "" : "opacity-50 cursor-not-allowed"
@@ -63,7 +65,7 @@ function BankAccount() {
         Withdraw 50
       </button>
       <button
-        onClick={() => console.log("clikced")}
+        onClick={() => console.log("Request a loan")}
         disabled={!isActive}
         className={`${
           isActive ? "" : "opacity-50 cursor-not-allowed"
@@ -72,7 +74,7 @@ function BankAccount() {
         Request a loan of 5000
       </button>
       <button
-        onClick={() => console.log("clikced")}
+        onClick={() => console.log("Pay loan")}
         disabled={!isActive}
         className={`${
           isActive ? "" : "opacity-50 cursor-not-allowed"
@@ -89,7 +91,7 @@ function BankAccount() {
       >
         🔒 Close Account
       </button>
-    </section>
+    </Main>
   );
 }
 
