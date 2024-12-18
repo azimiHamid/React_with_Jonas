@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav>
-      <ul className="flex gap-4">
+    <nav className="bg-brand-1/90 z-10 backdrop-blur-md">
+      <ul className="flex gap-4 p-4 bg-slate-800 text-gray-50">
         <li>
           <NavLink to="/">TripTrek</NavLink>
         </li>
