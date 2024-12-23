@@ -1,13 +1,3 @@
-🌍 TripTrek
 
-<h1>
-    You travel the world.
-    TripTrek keeps track of your adventures.
-</h1>
-
-
-<p>
-    A world map that tracks your footsteps into every city you think of. Never forget your wonderful experiences, and show your friends how you have wandered the world.
-</p>
 
 <button>START TRACKING NOW</button>
