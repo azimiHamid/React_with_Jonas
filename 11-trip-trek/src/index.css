@@ -46,6 +46,6 @@ input:focus {
 
 .active {
   font-weight: bold;
-  color: #000000;
+  color: #d3f732;
   transition: all 0.4s;
 }
