@@ -24,3 +24,12 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.loginBtn {
+  background: #00c46a;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
