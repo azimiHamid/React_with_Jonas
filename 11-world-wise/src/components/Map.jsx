@@ -8,11 +8,14 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
+
 import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
 import { useCities } from "../context/CitiesContext";
 
 import L from "leaflet";
+import { useGeolocation } from "../hooks/useGeolocation";
+import Button from "./Button";
 
 const markerIcon =
   "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png";
@@ -29,9 +32,14 @@ L.Icon.Default.mergeOptions({
 
 function Map() {
   const { cities } = useCities();
+  const {
+    isLoading: isLoadingPosition,
+    position: geolocationPosition,
+    getPosition,
+  } = useGeolocation();
   const [mapPosition, setMapPosition] = useState([34, 69]);
-
   const [searchParams] = useSearchParams();
+
   const mapLat = parseFloat(searchParams.get("lat"));
   const mapLng = parseFloat(searchParams.get("lng"));
 
@@ -39,8 +47,16 @@ function Map() {
     if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
   }, [mapLat, mapLng]);
 
+  useEffect(() => {
+    if (geolocationPosition)
+      setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+  }, [geolocationPosition]);
+
   return (
     <div className={styles.mapContainer}>
+      {!geolocationPosition && <Button type="position" onClick={getPosition}>
+        {isLoadingPosition ? "Loading..." : "Use your position"}
+      </Button>}
       <MapContainer
         className={styles.map}
         center={mapPosition}
