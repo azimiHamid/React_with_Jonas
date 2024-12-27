@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { faker } from "@faker-js/faker";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 function createRandomPost() {
   return {
@@ -37,6 +37,7 @@ function PostProvider({ children }) {
   }
 
   return (
+    // 2. PROVIDE VALUE TO CHILD COMPONENTS
     <PostContext.Provider
       value={{
         posts: searchedPosts,
@@ -51,4 +52,13 @@ function PostProvider({ children }) {
   );
 }
 
-export { PostProvider, PostContext };
+// CREATING Custom hooks FOR CONSUMING THE CONTEXT
+function usePosts() {
+  const context = useContext(PostContext);
+  if (context === undefined)
+    throw new Error("PostContext was used outside the PostProvider!");
+  return context;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export { PostProvider, usePosts };
