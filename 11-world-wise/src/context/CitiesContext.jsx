@@ -12,25 +12,25 @@ function CitiesProvider({ children }) {
 
   useEffect(() => {
     async function fetchCities() {
-      setIsLoading(true);
+      setIsLoading(true); // Start loading
       try {
         const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
-        setCities(data);
+        setCities(data); // Update state(cities) with fetched data
       } catch (error) {
         alert("OOPS! There was an error loading data");
         console.error(error.message);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Stop loading, whether success or error
       }
     }
 
     fetchCities();
-  }, [setCities, setIsLoading]);
+  }, []);
 
   async function getCity(id) {
+    setIsLoading(true); // better to be outside the try block
     try {
-      setIsLoading(true);
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
       setCurrentCity(data);
