@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MapContainer,
   TileLayer,
@@ -12,10 +12,10 @@ import {
 import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
 import { useCities } from "../context/CitiesContext";
-
-import L from "leaflet";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
+import L from "leaflet";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 const markerIcon =
   "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png";
@@ -31,17 +31,15 @@ L.Icon.Default.mergeOptions({
 });
 
 function Map() {
-  const { cities } = useCities();
+  const [mapPosition, setMapPosition] = useState([34, 69]);
+
+  const { cities } = useCities(); // context
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
-  } = useGeolocation();
-  const [mapPosition, setMapPosition] = useState([34, 69]);
-  const [searchParams] = useSearchParams();
-
-  const mapLat = parseFloat(searchParams.get("lat"));
-  const mapLng = parseFloat(searchParams.get("lng"));
+  } = useGeolocation(); // custom hook
+  const [mapLat, mapLng] = useUrlPosition(); // custom hook
 
   useEffect(() => {
     if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
@@ -54,9 +52,11 @@ function Map() {
 
   return (
     <div className={styles.mapContainer}>
-      {!geolocationPosition && <Button type="position" onClick={getPosition}>
-        {isLoadingPosition ? "Loading..." : "Use your position"}
-      </Button>}
+      {!geolocationPosition && (
+        <Button type="position" onClick={getPosition}>
+          {isLoadingPosition ? "Loading..." : "Use your position"}
+        </Button>
+      )}
       <MapContainer
         className={styles.map}
         center={mapPosition}
