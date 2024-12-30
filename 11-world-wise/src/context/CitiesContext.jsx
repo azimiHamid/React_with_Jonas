@@ -1,27 +1,64 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const BASE_URL = "http://localhost:3000";
 
 const CitiesContext = createContext();
 
+const initialState = {
+  cities: [],
+  isLoading: false,
+  currentCity: {},
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "START_LOADING":
+      return { ...state, isLoading: true };
+
+    case "SET_CITIES":
+      return { ...state, cities: action.payload };
+
+    case "STOP_LOADING":
+      return { ...state, isLoading: false };
+
+    case "SET_CURRENT_CITY":
+      return { ...state, currentCity: action.payload };
+
+    case "ADD_CITY":
+      return { ...state, cities: [...state.cities, action.payload] };
+
+    case "REMOVE_CITY":
+      return {
+        ...state,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      };
+
+    default:
+      throw new Error(`Unknown action type: ${action.type}`);
+  }
+}
+
 function CitiesProvider({ children }) {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentCity, setCurrentCity] = useState();
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { cities, isLoading, currentCity } = state;
+
+  // const [cities, setCities] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [currentCity, setCurrentCity] = useState();
 
   useEffect(() => {
     async function fetchCities() {
-      setIsLoading(true); // Start loading
+      dispatch({ type: "START_LOADING" }); // Start loading
       try {
         const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
-        setCities(data); // Update state(cities) with fetched data
+        dispatch({ type: "SET_CITIES", payload: data }); // Update state(cities) with fetched data
       } catch (error) {
-        alert("OOPS! There was an error loading data");
+        alert("OOPS! There was an error fetching cities data.");
         console.error(error.message);
       } finally {
-        setIsLoading(false); // Stop loading, whether success or error
+        dispatch({ type: "STOP_LOADING" }); // Stop loading, whether success or error
       }
     }
 
@@ -29,16 +66,52 @@ function CitiesProvider({ children }) {
   }, []);
 
   async function getCity(id) {
-    setIsLoading(true); // better to be outside the try block
+    dispatch({ type: "START_LOADING" }); // better to be outside the try block
     try {
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
-      setCurrentCity(data);
+      dispatch({ type: "SET_CURRENT_CITY", payload: data });
     } catch (error) {
-      alert("OOPS! There was an error loading data");
+      alert("OOPS! There was an error loading data.");
       console.error(error.message);
     } finally {
-      setIsLoading(false);
+      dispatch({ type: "STOP_LOADING" });
+    }
+  }
+
+  async function createCity(newCity) {
+    dispatch({ type: "START_LOADING" }); // better to be outside the try block
+    try {
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: "POST",
+        body: JSON.stringify(newCity),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      dispatch({ type: "ADD_CITY", payload: data });
+    } catch (error) {
+      alert("OOPS! There was an error creating city.");
+      console.error(error.message);
+    } finally {
+      dispatch({ type: "STOP_LOADING" });
+    }
+  }
+
+  async function deleteCity(id) {
+    dispatch({ type: "START_LOADING" }); // better to be outside the try block
+    try {
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+
+      dispatch({ type: "REMOVE_CITY", payload: id });
+    } catch (error) {
+      alert("OOPS! There was an error deleting city.");
+      console.error(error.message);
+    } finally {
+      dispatch({ type: "STOP_LOADING" });
     }
   }
 
@@ -49,6 +122,8 @@ function CitiesProvider({ children }) {
         isLoading,
         currentCity,
         getCity,
+        createCity,
+        deleteCity,
       }}
     >
       {children}
