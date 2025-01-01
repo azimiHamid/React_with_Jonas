@@ -9,6 +9,7 @@ const initialState = {
   cities: [],
   isLoading: false,
   currentCity: {},
+  errorMsg: "",
 };
 
 function reducer(state, action) {
@@ -34,6 +35,9 @@ function reducer(state, action) {
         cities: state.cities.filter((city) => city.id !== action.payload),
       };
 
+    case "REJECTED":
+      return { ...state, isLoading: false, errorMsg: action.payload };
+
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
@@ -43,10 +47,6 @@ function CitiesProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { cities, isLoading, currentCity } = state;
 
-  // const [cities, setCities] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [currentCity, setCurrentCity] = useState();
-
   useEffect(() => {
     async function fetchCities() {
       dispatch({ type: "START_LOADING" }); // Start loading
@@ -55,8 +55,11 @@ function CitiesProvider({ children }) {
         const data = await res.json();
         dispatch({ type: "SET_CITIES", payload: data }); // Update state(cities) with fetched data
       } catch (error) {
-        alert("OOPS! There was an error fetching cities data.");
-        console.error(error.message);
+        dispatch({
+          type: "REJECTED",
+          payload: "OOPS! There was an error fetching cities data.",
+        });
+        console.error(error);
       } finally {
         dispatch({ type: "STOP_LOADING" }); // Stop loading, whether success or error
       }
@@ -72,7 +75,10 @@ function CitiesProvider({ children }) {
       const data = await res.json();
       dispatch({ type: "SET_CURRENT_CITY", payload: data });
     } catch (error) {
-      alert("OOPS! There was an error loading data.");
+      dispatch({
+        type: "REJECTED",
+        payload: "OOPS! There was an error loading data.",
+      });
       console.error(error.message);
     } finally {
       dispatch({ type: "STOP_LOADING" });
@@ -92,7 +98,10 @@ function CitiesProvider({ children }) {
       const data = await res.json();
       dispatch({ type: "ADD_CITY", payload: data });
     } catch (error) {
-      alert("OOPS! There was an error creating city.");
+      dispatch({
+        type: "REJECTED",
+        payload: "OOPS! There was an error creating city.",
+      });
       console.error(error.message);
     } finally {
       dispatch({ type: "STOP_LOADING" });
@@ -108,7 +117,10 @@ function CitiesProvider({ children }) {
 
       dispatch({ type: "REMOVE_CITY", payload: id });
     } catch (error) {
-      alert("OOPS! There was an error deleting city.");
+      dispatch({
+        type: "REJECTED",
+        payload: "OOPS! There was an error creating city.",
+      });
       console.error(error.message);
     } finally {
       dispatch({ type: "STOP_LOADING" });
