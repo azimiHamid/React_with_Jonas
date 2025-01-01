@@ -27,12 +27,17 @@ function reducer(state, action) {
       return { ...state, currentCity: action.payload };
 
     case "ADD_CITY":
-      return { ...state, cities: [...state.cities, action.payload] };
+      return {
+        ...state,
+        cities: [...state.cities, action.payload],
+        currentCity: action.payload,
+      };
 
     case "REMOVE_CITY":
       return {
         ...state,
         cities: state.cities.filter((city) => city.id !== action.payload),
+        currentCity: {},
       };
 
     case "REJECTED":
@@ -45,7 +50,7 @@ function reducer(state, action) {
 
 function CitiesProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { cities, isLoading, currentCity } = state;
+  const { cities, isLoading, currentCity, error } = state;
 
   useEffect(() => {
     async function fetchCities() {
@@ -69,6 +74,8 @@ function CitiesProvider({ children }) {
   }, []);
 
   async function getCity(id) {
+    if (Number(id) === currentCity.id) return;
+
     dispatch({ type: "START_LOADING" }); // better to be outside the try block
     try {
       const res = await fetch(`${BASE_URL}/cities/${id}`);
@@ -77,7 +84,7 @@ function CitiesProvider({ children }) {
     } catch (error) {
       dispatch({
         type: "REJECTED",
-        payload: "OOPS! There was an error loading data.",
+        payload: "OOPS! There was an error loading current city data.",
       });
       console.error(error.message);
     } finally {
@@ -133,6 +140,7 @@ function CitiesProvider({ children }) {
         cities,
         isLoading,
         currentCity,
+        error,
         getCity,
         createCity,
         deleteCity,

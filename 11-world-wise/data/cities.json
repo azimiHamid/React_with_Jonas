@@ -1,99 +1,39 @@
 {
   "cities": [
     {
-      "cityName": "Lisbon",
-      "country": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2027-10-31T15:59:59.138Z",
-      "notes": "My favorite city so far!",
-      "position": {
-        "lat": 38.727881642324164,
-        "lng": -9.140900099907554
-      },
-      "id": "73930385"
-    },
-    {
-      "cityName": "Madrid",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
-      "notes": "",
-      "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
-      },
-      "id": "17806751"
-    },
-    {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": "98443197"
-    },
-    {
-      "id": "6e90",
+      "id": "f318",
       "cityName": "Kabul",
       "country": "Afghanistan",
       "emoji": "🇦🇫",
-      "date": "2024-12-30T13:11:50.857Z",
-      "notes": "",
+      "date": "2025-01-01T15:17:57.557Z",
+      "notes": "My Home Land 🤠🫡",
       "position": {
-        "lat": 34.51560953848204,
-        "lng": 69.19738769531251
+        "lat": 34.488447837809304,
+        "lng": 69.20288085937501
       }
     },
     {
-      "id": "14b4",
-      "cityName": "Jaghuri",
-      "country": "Afghanistan",
-      "emoji": "🇦🇫",
-      "date": "2024-12-30T13:12:02.121Z",
+      "id": "fc82",
+      "cityName": "Fort Worth",
+      "country": "United States of America (the)",
+      "emoji": "🇺🇸",
+      "date": "2025-01-25T15:31:56.000Z",
       "notes": "",
       "position": {
-        "lat": 33.144450560077985,
-        "lng": 67.48352050781251
+        "lat": 32.722598604044066,
+        "lng": -97.31689453125
       }
     },
     {
-      "id": "eb90",
-      "cityName": "Dhaka",
-      "country": "Bangladesh",
-      "emoji": "🇧🇩",
-      "date": "2024-12-30T17:20:40.872Z",
-      "notes": "",
-      "position": {
-        "lat": 23.725011735951796,
-        "lng": 90.41748046875001
-      }
-    },
-    {
-      "id": "e8d3",
-      "cityName": "Goalpara",
+      "id": "2d47",
+      "cityName": "Gwalior",
       "country": "India",
       "emoji": "🇮🇳",
-      "date": "2024-12-30T17:22:36.526Z",
+      "date": "2024-10-07T15:32:34.000Z",
       "notes": "",
       "position": {
-        "lat": 26.155437968713574,
-        "lng": 90.63720703125
-      }
-    },
-    {
-      "id": "c547",
-      "cityName": "Chang Gewog",
-      "country": "Bhutan",
-      "emoji": "🇧🇹",
-      "date": "2024-12-30T17:23:06.005Z",
-      "notes": "",
-      "position": {
-        "lat": 27.459539332717906,
-        "lng": 89.63195800781251
+        "lat": 26.204734267107604,
+        "lng": 78.17871093750001
       }
     }
   ]
