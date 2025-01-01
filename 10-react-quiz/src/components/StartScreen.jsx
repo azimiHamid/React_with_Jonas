@@ -1,5 +1,7 @@
-/* eslint-disable react/prop-types */
-function StartScreen({ numOfQuestions, dispatch }) {
+import { useQuiz } from "../context/QuizContext";
+
+function StartScreen() {
+  const { numOfQuestions, dispatch } = useQuiz();
   return (
     <div className="flex flex-col items-center text-white px-6 mt-10">
       <div className="text-center">

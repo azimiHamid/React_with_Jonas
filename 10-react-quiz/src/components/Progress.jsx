@@ -1,5 +1,9 @@
-/* eslint-disable react/prop-types */
-function Progress({ index, numOfQuestions, points, maxPossiblePoints, answer }) {
+import { useQuiz } from "../context/QuizContext";
+
+function Progress() {
+  const { index, numOfQuestions, points, maxPossiblePoints, answer } =
+    useQuiz();
+
   return (
     <header className="max-w-xl w-full flex flex-col mt-5">
       <progress

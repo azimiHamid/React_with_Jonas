@@ -1,6 +1,10 @@
+import { useQuiz } from "../context/QuizContext";
+
 /* eslint-disable react/prop-types */
-function Options({ question, dispatch, answer }) {
+function Options({ question }) {
+  const { dispatch, answer } = useQuiz();
   const hasAnswered = answer !== null;
+
   return (
     <div className="flex flex-col justify-center items-center gap-3 w-full">
       {question.options.map((option, idx) => (
