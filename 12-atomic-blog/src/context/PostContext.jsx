@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import { faker } from "@faker-js/faker";
 import { createContext, useContext, useState } from "react";
@@ -60,5 +61,4 @@ function usePosts() {
   return context;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export { PostProvider, usePosts };
