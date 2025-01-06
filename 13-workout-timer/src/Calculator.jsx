@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { memo, useEffect, useState } from "react";
 import clickSound from "./ClickSound.m4a";
 
 function Calculator({ workouts, allowSound }) {
@@ -8,15 +8,64 @@ function Calculator({ workouts, allowSound }) {
   const [speed, setSpeed] = useState(90);
   const [durationBreak, setDurationBreak] = useState(5);
 
-  const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
+  const [duration, setDuration] = useState(0);
+
+  /**
+   * If playing the sound is strictly tied to changes in duration,
+   * your useEffect approach is fine. However, if playSound is 
+   * conceptually an independent action that might be triggered on
+   * demand (e.g., button clicks, external events), then the
+   * useCallback approach is better.
+   */
+  // const playSound = useCallback(
+  //   function () {
+  //     if (!allowSound) return;
+  //     const sound = new Audio(clickSound);
+  //     sound.play();
+  //   },
+  //   [allowSound]
+  // );
+
+  useEffect(
+    function () {
+      setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+    },
+    [number, sets, speed, durationBreak]
+  );
+
+  function playSound(allowSound) {
+    if (!allowSound) return;
+    const sound = new Audio(clickSound);
+    sound.volume = 0.001;
+    sound.play();
+  }
+
+  useEffect(
+    function () {
+      playSound(allowSound);
+    },
+    [duration, allowSound]
+  );
+
+  useEffect(
+    function () {
+      console.log(duration, sets);
+      document.title = `Your ${number}-exercise workout`;
+    },
+    // If dependencies are not added here, the effect will capture outdated values from its closure due to React's default behavior of using the closure created during the render when the effect was defined.
+    [number, duration, sets]
+  );
+
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
-  const playSound = function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  };
+  function handleInc() {
+    setDuration((prev) => Math.floor(prev) + 1);
+  }
+
+  function handleDec() {
+    setDuration((prev) => (prev > 1 ? Math.ceil(prev) - 1 : 0));
+  }
 
   return (
     <>
@@ -67,16 +116,16 @@ function Calculator({ workouts, allowSound }) {
         </div>
       </form>
       <section>
-        <button onClick={() => {}}>–</button>
+        <button onClick={handleDec}>–</button>
         <p>
           {mins < 10 && "0"}
           {mins}:{seconds < 10 && "0"}
           {seconds}
         </p>
-        <button onClick={() => {}}>+</button>
+        <button onClick={handleInc}>+</button>
       </section>
     </>
   );
 }
 
-export default Calculator;
+export default memo(Calculator);

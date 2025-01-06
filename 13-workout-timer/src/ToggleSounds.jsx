@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
+import { memo } from "react";
+
 function ToggleSounds({ allowSound, setAllowSound }) {
   return (
     <button
       className="btn-sound"
-      onClick={() => setAllowSound((allow) => !allow)}
+      onClick={() => setAllowSound((prev) => !prev)}
     >
       {allowSound ? "🔈" : "🔇"}
     </button>
   );
 }
 
-export default ToggleSounds;
+export default memo(ToggleSounds);
