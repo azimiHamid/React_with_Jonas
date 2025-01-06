@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCities } from "../context/CitiesContext";
 import Spinner from "./Spinner";
-import styles from "./City.module.css";
 import BackButton from "./BackButton";
+import styles from "./City.module.css";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -24,12 +24,10 @@ function City() {
     [id, getCity]
   );
 
-  // Handle loading state or undefined currentCity
+  // Handle loading state or undefined
   if (!currentCity) return <Spinner />;
 
   const { cityName, emoji, date, notes } = currentCity;
-
-  // if (isLoading) return <Spinner />
 
   return (
     <div className={styles.city}>
