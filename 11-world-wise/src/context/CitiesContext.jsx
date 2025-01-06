@@ -1,6 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -74,24 +80,30 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  async function getCity(id) {
-    if (Number(id) === currentCity.id) return;
+  const getCity = useCallback(
+    async function getCity(id) {
+      if (id === String(currentCity.id)) return;
 
-    dispatch({ type: "START_LOADING" }); // better to be outside the try block
-    try {
-      const res = await fetch(`${BASE_URL}/cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: "SET_CURRENT_CITY", payload: data });
-    } catch (error) {
-      dispatch({
-        type: "REJECTED",
-        payload: "OOPS! There was an error loading current city data.",
-      });
-      console.error(error.message);
-    } finally {
-      dispatch({ type: "STOP_LOADING" });
-    }
-  }
+      dispatch({ type: "START_LOADING" }); // Ensure loading state starts
+      try {
+        const res = await fetch(`${BASE_URL}/cities/${id}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch city data.");
+        }
+        const data = await res.json();
+        dispatch({ type: "SET_CURRENT_CITY", payload: data });
+      } catch (error) {
+        dispatch({
+          type: "REJECTED",
+          payload: "OOPS! There was an error loading current city data.",
+        });
+        console.error("Error fetching city data:", error);
+      } finally {
+        dispatch({ type: "STOP_LOADING" });
+      }
+    },
+    [currentCity.id]
+  );
 
   async function createCity(newCity) {
     dispatch({ type: "START_LOADING" }); // better to be outside the try block

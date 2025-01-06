@@ -1,39 +1,27 @@
 {
   "cities": [
     {
-      "id": "f318",
+      "id": "ed9f",
       "cityName": "Kabul",
       "country": "Afghanistan",
       "emoji": "🇦🇫",
-      "date": "2025-01-01T15:17:57.557Z",
-      "notes": "My Home Land 🤠🫡",
+      "date": "2025-01-06T07:34:12.339Z",
+      "notes": "Home",
       "position": {
-        "lat": 34.488447837809304,
-        "lng": 69.20288085937501
+        "lat": 34.499262296559195,
+        "lng": 69.0419912338257
       }
     },
     {
-      "id": "fc82",
+      "id": "7b3c",
       "cityName": "Fort Worth",
       "country": "United States of America (the)",
       "emoji": "🇺🇸",
-      "date": "2025-01-25T15:31:56.000Z",
+      "date": "2025-01-25T07:39:43.000Z",
       "notes": "",
       "position": {
-        "lat": 32.722598604044066,
-        "lng": -97.31689453125
-      }
-    },
-    {
-      "id": "2d47",
-      "cityName": "Gwalior",
-      "country": "India",
-      "emoji": "🇮🇳",
-      "date": "2024-10-07T15:32:34.000Z",
-      "notes": "",
-      "position": {
-        "lat": 26.204734267107604,
-        "lng": 78.17871093750001
+        "lat": 32.74801260358348,
+        "lng": -97.33200073242189
       }
     }
   ]
