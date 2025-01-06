@@ -23,6 +23,30 @@
         "lat": 32.74801260358348,
         "lng": -97.33200073242189
       }
+    },
+    {
+      "id": "f971",
+      "cityName": "London",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "emoji": "🇬🇧",
+      "date": "2025-01-01T11:34:49.000Z",
+      "notes": "2025 I traveled to london",
+      "position": {
+        "lat": 51.50617819737357,
+        "lng": -0.12222290039062501
+      }
+    },
+    {
+      "id": "33c9",
+      "cityName": "Jaghuri",
+      "country": "Afghanistan",
+      "emoji": "🇦🇫",
+      "date": "2025-01-31T11:37:20.000Z",
+      "notes": "",
+      "position": {
+        "lat": 33.13697622055061,
+        "lng": 67.43614196777345
+      }
     }
   ]
 }
