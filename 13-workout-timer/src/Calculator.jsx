@@ -16,7 +16,7 @@ function Calculator({ workouts, allowSound }) {
    * conceptually an independent action that might be triggered on
    * demand (e.g., button clicks, external events), then the
    * useCallback approach is better.
-   */
+  */
   // const playSound = useCallback(
   //   function () {
   //     if (!allowSound) return;
@@ -52,7 +52,10 @@ function Calculator({ workouts, allowSound }) {
       console.log(duration, sets);
       document.title = `Your ${number}-exercise workout`;
     },
-    // If dependencies are not added here, the effect will capture outdated values from its closure due to React's default behavior of using the closure created during the render when the effect was defined.
+    /** If dependencies are not added here, the effect will
+     * capture outdated values from its closure due to React's
+     * default behavior of using the closure created during the
+     * render when the effect was defined. */
     [number, duration, sets]
   );
 
