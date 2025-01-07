@@ -4,6 +4,10 @@ body {
   margin: 40px;
 }
 
+fieldset {
+  border: none;
+}
+
 input,
 select {
   margin: 0 8px;

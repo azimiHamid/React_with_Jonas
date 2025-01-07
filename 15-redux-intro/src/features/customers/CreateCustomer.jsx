@@ -7,26 +7,26 @@ function Customer() {
   function handleClick() {}
 
   return (
-    <div>
+    <section>
       <h2>Create new customer</h2>
-      <div className="inputs">
-        <div>
+      <fieldset className="inputs">
+        <article>
           <label>Customer full name</label>
           <input
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
-        </div>
-        <div>
+        </article>
+        <article>
           <label>National ID</label>
           <input
             value={nationalId}
             onChange={(e) => setNationalId(e.target.value)}
           />
-        </div>
+        </article>
         <button onClick={handleClick}>Create new customer</button>
-      </div>
-    </div>
+      </fieldset>
+    </section>
   );
 }
 
