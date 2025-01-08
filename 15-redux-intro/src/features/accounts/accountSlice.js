@@ -1,12 +1,86 @@
 /* eslint-disable no-unused-vars */
-const initialStateAccount = {
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
   isLoading: false,
 };
 
-function accountReducer(state = initialStateAccount, action) {
+const accountSlice = createSlice({
+  name: "account",
+  initialState,
+  reducers: {
+    deposit(state, action) {
+      state.balance += action.payload;
+      state.isLoading = false;
+    },
+    withdraw(state, action) {
+      state.balance -= action.payload;
+    },
+    requestLoan: {
+      prepare(amount, purpose) {
+        return { payload: { amount, purpose } };
+      },
+
+      reducer(state, action) {
+        if (state.loan > 0) return;
+
+        state.loan = action.payload.amount;
+        state.loanPurpose = action.payload.purpose;
+        state.balance += action.payload.amount;
+      },
+    },
+    payLoan(state, action) {
+      state.balance -= state.loan;
+      state.loan = 0;
+      state.loanPurpose = "";
+    },
+    convertingCurrency(state) {
+      state.isLoading = true;
+    },
+  },
+});
+
+console.log(accountSlice);
+
+export function deposit(amount, currency) {
+  if (!currency) {
+    currency = "USD";
+  }
+
+  if (currency === "USD") {
+    return { type: "account/deposit", payload: amount };
+  }
+
+  return async function (dispatch, getState) {
+    dispatch({ type: "account/convertingCurrency" });
+    try {
+      const res = await fetch(
+        `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+      );
+      if (!res.ok)
+        throw new Error(`Failed to fetch conversion rates for ${currency}`);
+
+      const data = await res.json();
+      const converted = data.rates?.USD;
+
+      if (!converted) throw new Error(`Conversion rate for USD not found`);
+
+      dispatch({ type: "account/deposit", payload: converted });
+    } catch (error) {
+      console.error("Error in currency conversion:", error.message);
+    }
+  };
+}
+
+export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+export default accountSlice.reducer;
+
+/*
+ * Old Redux
+function accountReducer(state = initialState, action) {
   switch (action.type) {
     case "account/deposit":
       return {
@@ -92,3 +166,4 @@ function payLoan() {
 }
 
 export { deposit, withdraw, requestLoan, payLoan };
+*/
