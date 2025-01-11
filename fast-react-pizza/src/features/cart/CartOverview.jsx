@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function CartOverview() {
   return (
-    <div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md">
+    <div className="flex items-center justify-between rounded-lg bg-stone-800 p-4 uppercase text-stone-200 shadow-md">
       {/* Cart Summary */}
-      <p className="flex space-x-4 text-gray-700">
+      <p className="flex space-x-4 font-semibold text-stone-300">
         <span className="font-semibold">23 pizzas</span>
         <span className="font-semibold text-green-600">$23.45</span>
       </p>
@@ -12,7 +12,7 @@ function CartOverview() {
       {/* Cart Link */}
       <Link
         to="/cart"
-        className="text-yellow-500 font-semibold hover:text-yellow-600 transition"
+        className="font-semibold text-yellow-500 transition hover:text-yellow-600"
       >
         Open cart &rarr;
       </Link>
