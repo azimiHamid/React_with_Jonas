@@ -1,49 +1,16 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 // Test ID: IIDSAT
-
+import { useLoaderData } from 'react-router-dom';
+import { getOrder } from '../../services/apiRestaurant';
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
-} from "../../utils/helpers";
-
-const order = {
-  id: "ABCDEF",
-  customer: "Jonas",
-  phone: "123456789",
-  address: "Arroios, Lisbon , Portugal",
-  priority: true,
-  estimatedDelivery: "2027-04-25T10:00:00",
-  cart: [
-    {
-      pizzaId: 7,
-      name: "Napoli",
-      quantity: 3,
-      unitPrice: 16,
-      totalPrice: 48,
-    },
-    {
-      pizzaId: 5,
-      name: "Diavola",
-      quantity: 2,
-      unitPrice: 16,
-      totalPrice: 32,
-    },
-    {
-      pizzaId: 3,
-      name: "Romana",
-      quantity: 1,
-      unitPrice: 15,
-      totalPrice: 15,
-    },
-  ],
-  position: "-9.000,38.000",
-  orderPrice: 95,
-  priorityPrice: 19,
-};
+} from '../../utils/helpers';
 
 function Order() {
-  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+  const order = useLoaderData();
   const {
     id,
     status,
@@ -56,32 +23,62 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div>
-      <div>
-        <h2>Status</h2>
-
-        <div>
-          {priority && <span>Priority</span>}
-          <span>{status} order</span>
+    <div className="flex min-h-screen flex-col items-center justify-center space-y-6 bg-gray-50 p-6">
+      {/* Order Status */}
+      <div className="w-full max-w-3xl rounded-md bg-white p-6 shadow-md">
+        <h2 className="mb-4 text-2xl font-semibold">Order Status</h2>
+        <div className="flex items-center justify-between">
+          {priority && (
+            <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-bold uppercase text-white">
+              Priority
+            </span>
+          )}
+          <span className="text-lg font-medium text-gray-700">
+            {status || 'Pending'} Order
+          </span>
         </div>
       </div>
 
-      <div>
-        <p>
+      {/* Delivery Information */}
+      <div className="w-full max-w-3xl rounded-md bg-white p-6 shadow-md">
+        <h3 className="mb-4 text-xl font-semibold">Delivery Information</h3>
+        <p className="text-lg text-gray-700">
           {deliveryIn >= 0
-            ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
-            : "Order should have arrived"}
+            ? `Only ${deliveryIn} minutes left! 😃`
+            : 'Order should have arrived.'}
         </p>
-        <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
+        <p className="text-sm text-gray-500">
+          (Estimated Delivery: {formatDate(estimatedDelivery)})
+        </p>
       </div>
 
-      <div>
-        <p>Price pizza: {formatCurrency(orderPrice)}</p>
-        {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
-        <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
+      {/* Pricing Details */}
+      <div className="w-full max-w-3xl rounded-md bg-white p-6 shadow-md">
+        <h3 className="mb-4 text-xl font-semibold">Pricing Details</h3>
+        <ul className="space-y-2 text-gray-700">
+          <li>
+            <span className="font-medium">Pizza Price:</span>{' '}
+            {formatCurrency(orderPrice)}
+          </li>
+          {priority && (
+            <li>
+              <span className="font-medium">Priority Fee:</span>{' '}
+              {formatCurrency(priorityPrice)}
+            </li>
+          )}
+          <li className="text-lg font-semibold">
+            <span className="font-medium">Total to Pay:</span>{' '}
+            {formatCurrency(orderPrice + priorityPrice)}
+          </li>
+        </ul>
       </div>
     </div>
   );
+}
+
+export async function loader({ params }) {
+  const order = await getOrder(params.orderId);
+  return order;
 }
 
 export default Order;
