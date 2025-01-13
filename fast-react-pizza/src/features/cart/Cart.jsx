@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
+import CartItem from './CartItem';
 
 const fakeCart = [
   {
@@ -31,33 +32,21 @@ function Cart() {
   const cart = fakeCart;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="px-4 py-3">
       <LinkButton to="/menu">&larr; Back to menu</LinkButton>
 
-      <h2 className="mb-6 mt-4 text-2xl font-bold text-gray-800">
-        Your cart, %NAME%
-      </h2>
+      <h2 className="mt-7 text-xl font-semibold">Your cart, %NAME%</h2>
 
-      <div className="space-y-4">
+      <ul className="mt-3 space-y-4 divide-y divide-stone-200 border-b">
         {cart.map((item) => (
-          <div
-            key={item.pizzaId}
-            className="flex items-center justify-between rounded-lg bg-white p-4 shadow"
-          >
-            <div>
-              <h3 className="text-lg font-semibold text-gray-700">
-                {item.name}
-              </h3>
-              <p className="text-gray-500">
-                {item.quantity} x ${item.unitPrice} = ${item.totalPrice}
-              </p>
-            </div>
-          </div>
+          <CartItem item={item} key={item.name} />
         ))}
-      </div>
+      </ul>
 
-      <div className="mt-6 flex items-center justify-between">
-        <Button to="/order/new">Order pizzas</Button>
+      <div className="mt-6 space-x-2">
+        <Button type="primary" to="/order/new">
+          Order pizzas
+        </Button>
         <button className="rounded-lg bg-red-500 px-4 py-2 font-semibold text-white shadow transition hover:bg-red-600">
           Clear cart
         </button>
