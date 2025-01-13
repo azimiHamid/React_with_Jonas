@@ -2,8 +2,8 @@ import CreateUser from '../features/user/CreateUser';
 
 function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-6 text-center">
-      <h1 className="text-xl font-semibold leading-snug text-stone-700 sm:text-5xl lg:text-6xl">
+    <div className="my-10 px-4 text-center sm:my-16">
+      <h1 className="md:text-3xl mb-8 text-xl font-semibold leading-snug text-stone-700 sm:text-5xl lg:text-6xl">
         The best pizza.
         <br />
         <span className="text-yellow-500">

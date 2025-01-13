@@ -4,12 +4,12 @@ import Username from '../features/user/Username';
 
 function Header() {
   return (
-    <header className="bg-yellow-500 p-4 uppercase text-white shadow-md">
+    <header className="flex items-center justify-between border-b border-stone-500 bg-yellow-500 p-4 px-4 py-3 uppercase text-white shadow-md sm:px-6">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl tracking-widest font-bold transition hover:text-stone-800"
+          className="text-2xl font-bold tracking-widest transition hover:text-stone-800"
         >
           Fast React Pizza Co.
         </Link>
