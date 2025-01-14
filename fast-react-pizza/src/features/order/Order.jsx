@@ -8,6 +8,7 @@ import {
   formatCurrency,
   formatDate,
 } from '../../utils/helpers';
+import OrderItem from './OrderItem';
 
 function Order() {
   const order = useLoaderData();
@@ -23,55 +24,54 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center space-y-6 bg-gray-50 p-6">
+    <div className="space-y-8 px-4 py-6">
       {/* Order Status */}
-      <div className="w-full max-w-3xl rounded-md bg-white p-6 shadow-md">
-        <h2 className="mb-4 text-2xl font-semibold">Order Status</h2>
-        <div className="flex items-center justify-between">
+      <fieldset className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-xl font-semibold">Order #{id} Status</h2>
+        <div className="space-x-2">
           {priority && (
-            <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-bold uppercase text-white">
+            <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-red-50">
               Priority
             </span>
           )}
-          <span className="text-lg font-medium text-gray-700">
+          <span className="rounded-full bg-green-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-green-50">
             {status || 'Pending'} Order
           </span>
         </div>
-      </div>
+      </fieldset>
 
       {/* Delivery Information */}
-      <div className="w-full max-w-3xl rounded-md bg-white p-6 shadow-md">
-        <h3 className="mb-4 text-xl font-semibold">Delivery Information</h3>
-        <p className="text-lg text-gray-700">
+      <fieldset className="flex flex-wrap items-center justify-between gap-2 bg-stone-200 px-6 py-5">
+        <p className="font-medium">
           {deliveryIn >= 0
-            ? `Only ${deliveryIn} minutes left! 😃`
+            ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left! 😃`
             : 'Order should have arrived.'}
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-xs text-stone-500">
           (Estimated Delivery: {formatDate(estimatedDelivery)})
         </p>
-      </div>
+      </fieldset>
+
+      <ul className="divide-y divide-stone-200 border-b border-t">
+        {cart.map((item) => (
+          <OrderItem key={item.pizzaId} item={item} />
+        ))}
+      </ul>
 
       {/* Pricing Details */}
-      <div className="w-full max-w-3xl rounded-md bg-white p-6 shadow-md">
-        <h3 className="mb-4 text-xl font-semibold">Pricing Details</h3>
-        <ul className="space-y-2 text-gray-700">
-          <li>
-            <span className="font-medium">Pizza Price:</span>{' '}
-            {formatCurrency(orderPrice)}
-          </li>
-          {priority && (
-            <li>
-              <span className="font-medium">Priority Fee:</span>{' '}
-              {formatCurrency(priorityPrice)}
-            </li>
-          )}
-          <li className="text-lg font-semibold">
-            <span className="font-medium">Total to Pay:</span>{' '}
-            {formatCurrency(orderPrice + priorityPrice)}
-          </li>
-        </ul>
-      </div>
+      <fieldset className="space-y-2 bg-stone-200 px-6 py-5">
+        <p className="text-sm font-medium text-stone-600">
+          Pizza price : {formatCurrency(orderPrice)}
+        </p>
+        {priority && (
+          <p className="text-sm font-medium text-stone-600">
+            Priority price : {formatCurrency(priorityPrice)}
+          </p>
+        )}
+        <p className="font-bold">
+          To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
+        </p>
+      </fieldset>
     </div>
   );
 }
