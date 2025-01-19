@@ -1,13 +1,29 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { formatCurrency } from '../../utils/helpers';
+import { useDispatch } from 'react-redux';
 import Button from '../../ui/Button';
+import { formatCurrency } from '../../utils/helpers';
+import { addItem } from '../cart/cartSlice';
 
 function MenuItem({ pizza }) {
+  const dispatch = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
+  function handleAddToCart() {
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    };
+    dispatch(addItem(newItem));
+  }
+
   return (
-    <li className="flex cursor-pointer gap-4 py-2 transition-all duration-300 hover:scale-95">
+    <li
+      className={`flex cursor-pointer gap-4 py-2 transition-all duration-300 ${!soldOut && 'hover:scale-95'}`}
+    >
       <img
         src={imageUrl}
         alt={name}
@@ -32,7 +48,11 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          <Button type="small">Add to cart</Button>
+          {!soldOut && (
+            <Button type="small" onClick={handleAddToCart}>
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </li>
