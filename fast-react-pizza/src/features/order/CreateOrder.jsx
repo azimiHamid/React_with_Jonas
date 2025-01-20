@@ -112,7 +112,7 @@ function CreateOrder() {
   );
 }
 
-export async function action({ request }) {
+async function action({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -135,4 +135,5 @@ export async function action({ request }) {
   return redirect(`/order/${newOrder.id}`);
 }
 
+export { action };
 export default CreateOrder;

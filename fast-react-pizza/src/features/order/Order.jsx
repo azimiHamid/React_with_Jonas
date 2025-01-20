@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
-// Test ID: IIDSAT
 import { useLoaderData } from 'react-router-dom';
 import { getOrder } from '../../services/apiRestaurant';
 import {
@@ -76,9 +75,10 @@ function Order() {
   );
 }
 
-export async function loader({ params }) {
+async function loader({ params }) {
   const order = await getOrder(params.orderId);
   return order;
 }
 
+export { loader };
 export default Order;
