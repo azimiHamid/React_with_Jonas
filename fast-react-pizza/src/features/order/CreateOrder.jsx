@@ -8,6 +8,7 @@ import { clearCart, getCart, getTotalCartPrice } from '../cart/cartSlice';
 import { formatCurrency } from '../../utils/helpers';
 import { fetchAddress } from '../user/userSlice';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import EmptyCart from '../cart/EmptyCart';
 import store from '../../store';
 import Button from '../../ui/Button';
@@ -100,6 +101,7 @@ function CreateOrder() {
                 }}
               >
                 <MyLocationIcon style={{ color: 'gray' }} />
+                <ArrowForwardIcon style={{ color: "white" }} />
               </Button>
             </span>
           )}
