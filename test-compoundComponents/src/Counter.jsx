@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
 
-// How to create a compound component?
-// 1. Create a context
+// Step 1: Create a Context to share state across Counter components
 const CounterContext = createContext();
 
-// 2. Create parent component
+// Step 2: Define the Parent `Counter` component, which manages state
 function Counter({ children }) {
   const [count, setCount] = useState(0);
   const increase = () => setCount((c) => c + 1);
@@ -18,24 +17,32 @@ function Counter({ children }) {
   );
 }
 
-// 3. Create child components to help implementing the common task of the parent component. like we have a <Counter.Label /> inside our <Counter /> component in the App.jsx file.
+// Step 3: Create reusable child components that access the Counter's shared state
+
+// Displays the current count
 function Count() {
   const { count } = useContext(CounterContext);
   return <span>{count}</span>;
 }
+
+// Displays a label for the counter
 function Label({ children }) {
   return <span>{children}</span>;
 }
+
+// Button to increase the count
 function Increase({ icon }) {
   const { increase } = useContext(CounterContext);
   return <button onClick={increase}>{icon}</button>;
 }
+
+// Button to decrease the count
 function Decrease({ icon }) {
   const { decrease } = useContext(CounterContext);
   return <button onClick={decrease}>{icon}</button>;
 }
 
-// 4. Add child components as properties to parent component
+// Step 4: Attach child components to the parent `Counter` component
 Counter.Count = Count;
 Counter.Label = Label;
 Counter.Increase = Increase;

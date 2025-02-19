@@ -4,16 +4,22 @@ function App() {
   return (
     <section className="app">
       <h1>Compound Component Pattern</h1>
-      {/* <Counter
+
+      {/* Example of using Counter with props (less flexible) */}
+      {/* 
+      <Counter
         iconIncrease="+"
         iconDecrease="-"
         label="My NOT so flexible counter"
         hideLabel={false}
         hideIncrease={false}
         hideDecrease={false}
-      /> */}
+      /> 
+      */}
 
-      {/* Now we can change any part and add some more html and css to wach one of the following counters seperately */}
+      {/* Using the Compound Component Pattern for greater flexibility */}
+      {/* Each counter can be customized independently with different layouts, styles, and elements */}
+
       <Counter>
         <Counter.Label>My super flexible counter</Counter.Label>
         <Counter.Decrease icon="-" />
@@ -22,6 +28,7 @@ function App() {
       </Counter>
       <br />
 
+      {/* Another counter with a different structure */}
       <Counter>
         <Counter.Decrease icon="⏮️" />
         <div>
@@ -31,6 +38,7 @@ function App() {
       </Counter>
       <br />
 
+      {/* A styled counter inside an article element */}
       <article className="styled-counter">
         <Counter>
           <mark>
