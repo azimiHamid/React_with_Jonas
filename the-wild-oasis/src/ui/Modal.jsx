@@ -3,7 +3,15 @@
 import styled from "styled-components";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import { useState, createContext, useContext, cloneElement } from "react";
+import {
+  useState,
+  createContext,
+  useContext,
+  cloneElement,
+  useEffect,
+  useRef,
+} from "react";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 // Styled Modal Box
 const StyledModal = styled.div`
@@ -95,13 +103,14 @@ function Open({ children, opens: openedWindowName }) {
 // `Window` Component: Displays modal content
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
+  const ref = useOutsideClick(close); // Get the ref from the hook
 
   // Render modal only if `openName` matches this window's `name`
   if (name !== openName) return null;
 
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref}> 
         <Button onClick={close}>
           <HiXMark />
         </Button>
@@ -112,8 +121,7 @@ function Window({ children, name }) {
         </div>
       </StyledModal>
     </Overlay>,
-    // document.getElementById("portal-root") // This moves the Window of the Modal component to this div with id = "portal-root" --> (check through index.html or inspect element in browser)
-    document.body // or you can append it directly to the body
+    document.body
   );
 }
 
