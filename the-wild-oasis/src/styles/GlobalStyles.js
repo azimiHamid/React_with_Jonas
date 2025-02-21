@@ -81,6 +81,15 @@ body {
   font-size: 1.6rem;
 }
 
+main {
+  overflow: scroll;
+  scrollbar-width: none; /* For Firefox */
+}
+
+main::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
+}
+
 input,
 button,
 textarea,

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { HiSquare2Stack, HiPencil, HiTrash } from "react-icons/hi2";
@@ -10,7 +9,6 @@ import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
-import Menus from "../../ui/Menus";
 
 const Img = styled.img`
   display: block;
@@ -76,46 +74,34 @@ function CabinRow({ cabin }) {
         <span>&mdash;</span>
       )}
       <div>
+        <button disabled={isCreating} onClick={handleDuplicate}>
+          <HiSquare2Stack />
+        </button>
+
         <Modal>
-          <Menus.Menu>
-            {/* Toggler Button */}
-            <Menus.Toggle id={cabinId} />
+          <Modal.Open opens="edit-cabin">
+            <button>
+              <HiPencil />
+            </button>
+          </Modal.Open>
 
-            <Menus.List id={cabinId}>
-              {/* Duplicate Button */}
-              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
-                Duplicate
-              </Menus.Button>
+          <Modal.Window name="edit-cabin">
+            <CreateCabinForm cabinToEdit={cabin} />
+          </Modal.Window>
 
-              {/* Modal.Open --> Edit */}
-              <Modal.Open opens="edit-cabin">
-                {/* Edit Button */}
-                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
-              </Modal.Open>
+          <Modal.Open opens="delete-cabin">
+            <button>
+              <HiTrash />
+            </button>
+          </Modal.Open>
 
-              {/* Modal.Open --> Delete */}
-              <Modal.Open opens="delete-cabin">
-                {/* Delete Button */}
-                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-              </Modal.Open>
-            </Menus.List>
-
-            {/* *************************************************** */}
-
-            {/* Edit Modal.Window */}
-            <Modal.Window name="edit-cabin">
-              <CreateCabinForm cabinToEdit={cabin} />
-            </Modal.Window>
-
-            {/* Delete Modal.Window */}
-            <Modal.Window name="delete-cabin">
-              <ConfirmDelete
-                resourceName="cabins"
-                disabled={isDeleting}
-                onConfirm={() => deleteCabin(cabinId)}
-              />
-            </Modal.Window>
-          </Menus.Menu>
+          <Modal.Window name="delete-cabin">
+            <ConfirmDelete
+              resourceName="cabins"
+              disabled={isDeleting}
+              onConfirm={() => deleteCabin(cabinId)}
+            />
+          </Modal.Window>
         </Modal>
       </div>
     </Table.Row>
