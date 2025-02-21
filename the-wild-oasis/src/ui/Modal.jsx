@@ -3,14 +3,7 @@
 import styled from "styled-components";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import {
-  useState,
-  createContext,
-  useContext,
-  cloneElement,
-  useEffect,
-  useRef,
-} from "react";
+import { useState, createContext, useContext, cloneElement } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 // Styled Modal Box
@@ -62,6 +55,7 @@ const Button = styled.button`
   }
 `;
 
+// Setting up compound component:
 // 1. Create a Context to manage modal state
 const ModalContext = createContext();
 
@@ -70,9 +64,9 @@ function Modal({ children }) {
   const [openName, setOpenName] = useState("");
 
   // Function to open a modal by setting its name
-  const open = (name) => setOpenName(name);
+  // const open = (name) => setOpenName(name);
   // or
-  // const open = setOpenName;
+  const open = setOpenName;
 
   // Function to close the modal by resetting `openName`
   const close = () => setOpenName("");
@@ -110,7 +104,7 @@ function Window({ children, name }) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}> 
+      <StyledModal ref={ref}>
         <Button onClick={close}>
           <HiXMark />
         </Button>
