@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from "styled-components";
 import BookingDataBox from "../../features/bookings/BookingDataBox";
 
@@ -8,6 +9,7 @@ import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
+import { useBooking } from "../bookings/useBooking";
 
 const Box = styled.div`
   /* Box */
@@ -18,9 +20,8 @@ const Box = styled.div`
 `;
 
 function CheckinBooking() {
+  const { booking, isLoading } = useBooking();
   const moveBack = useMoveBack();
-
-  const booking = {};
 
   const {
     id: bookingId,
@@ -44,7 +45,7 @@ function CheckinBooking() {
 
       <ButtonGroup>
         <Button onClick={handleCheckin}>Check in booking #{bookingId}</Button>
-        <Button variation="secondary" onClick={moveBack}>
+        <Button $variation="secondary" onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>
