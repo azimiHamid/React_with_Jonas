@@ -1,17 +1,17 @@
 import styled from "styled-components";
-
-import BookingDataBox from "./BookingDataBox";
-import Row from "../../ui/Row";
-import Heading from "../../ui/Heading";
-import Tag from "../../ui/Tag";
-import ButtonGroup from "../../ui/ButtonGroup";
-import Button from "../../ui/Button";
-import ButtonText from "../../ui/ButtonText";
-
-import { useMoveBack } from "../../hooks/useMoveBack";
-import { useBooking } from "./useBooking";
-import Spinner from "../../ui/Spinner";
 import { useNavigate } from "react-router-dom";
+
+import Row from "../../ui/Row";
+import Tag from "../../ui/Tag";
+import Button from "../../ui/Button";
+import Heading from "../../ui/Heading";
+import Spinner from "../../ui/Spinner";
+import ButtonText from "../../ui/ButtonText";
+import ButtonGroup from "../../ui/ButtonGroup";
+import BookingDataBox from "./BookingDataBox";
+
+import { useBooking } from "./useBooking";
+import { useMoveBack } from "../../hooks/useMoveBack";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -27,7 +27,6 @@ function BookingDetail() {
   if (isLoading) return <Spinner />;
 
   const { status, id: bookingId } = booking;
-
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
