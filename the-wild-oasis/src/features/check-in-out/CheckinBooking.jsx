@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 import Row from "../../ui/Row";
 import Button from "../../ui/Button";
